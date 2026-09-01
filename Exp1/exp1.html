@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Korean Experiment</title>
+  <!-- Load JsPsych -->
+  <script src="https://unpkg.com/jspsych@8.3.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-instructions@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
+  <script src="stims.js"></script>
+  
+  <link href="https://unpkg.com/jspsych@8.3.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+
+  <!--Load Font-->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* General page */
+    body,
+    .jspsych-content,
+    .jspsych-content-wrapper {
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+  
+    body {
+      background-color: #f4f6f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+  
+    .jspsych-content-wrapper {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 20px 40px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  
+    h1,
+    h2,
+    h3 {
+      color: #2c3e50;
+    }
+  
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+  
+    /* jsPsych buttons */
+    .jspsych-btn {
+      font-size: 14px;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 8px;
+      background-color: #64748b;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  
+    .jspsych-btn:hover {
+      background-color: #475569;
+    }
+  
+    /* Consent */
+    .jspsych-content .consent p {
+      font-size: 16px;
+      line-height: 1.4;
+      text-align: justify;
+    }
+  
+    .jspsych-content .consent h3 {
+      font-size: 18px;
+      line-height: 1.4;
+    }
+  
+  
+    /* ---------- Instructions ---------- */
+  
+    .content {
+      margin-top: 20px;
+    }
+  
+    .example-box {
+      background: paleturquoise;
+      padding: 12px 12px;
+      border-radius: 12px;
+      text-align: center;
+    }
+  
+    .jspsych-instructions-nav {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .inst-box{
+      background-color: lemonchiffon;
+      border-radius: 12px;
+      padding: 18px;
+    }
+  
+  
+    /* ---------- Start screen ---------- */
+  
+    .begin-box {
+      background-color: #e0f2fe;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+    }
+  
+    .begin-box p {
+      font-size: 22px;
+      font-weight: 500;
+    }
+  
+  
+    /* ---------- Experimental trials ---------- */
+  
+    .trial-card {
+      max-width: 750px;
+      margin: 0 auto;
+      text-align: center;
+    }
+  
+    .trial-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+  
+    .sentence-box {
+      background-color: #f8fafc;
+      padding: 20px 25px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+  
+    .target-sentence,
+    .probe-sentence {
+      font-size: 22px;
+      font-weight: 500;
+      margin: 0;
+      line-height: 1.6;
+    }
+  
+    .meaning-arrow {
+      font-size: 28px;
+      margin: 15px 0;
+      color: #64748b;
+    }
+
+    .reformulation-marker {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 22px 0;
+      color: #64748b;
+}
+  
+    .trial-question {
+      font-size: 19px;
+      font-weight: 500;
+      margin-top: 30px;
+    }
+
+    /* ---------- Local test / saving ---------- */
+  
+    .saving-box {
+      background-color: #ecfdf5;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+    }
+  
+    .saving-box h2 {
+      margin-top: 0;
+      color: #047857;
+    }
+  
+  
+    /* ---------- Completion ---------- */
+  
+    .completion-box {
+      background-color: #f0fdf4;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+    }
+  
+    .completion-box h2 {
+      margin-top: 0;
+      color: #15803d;
+    }
+  
+  
+    /* ---------- Error screen ---------- */
+  
+    .error-box {
+      padding: 30px;
+      text-align: center;
+    }
+  
+  
+    /* Progress bar */
+  
+    #jspsych-progressbar-container {
+      background-color: #f3f7f4;
+      padding: 10px 0;
+      margin-bottom: 20px;
+    }
+
+    #jspsych-progressbar-outer {
+      width: 90%;
+      margin: 0 auto;
+      height: 12px;
+      background-color: #dfe9e2;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    #jspsych-progressbar-inner {
+      height: 100%;
+
+      /* light green → darker green */
+      background: linear-gradient(
+        90deg,
+        #b7d9c2 0%,
+        #74b68b 55%,
+        #3f8f5f 100%
+      );
+
+      transition: width 0.4s ease;
+      border-radius: 8px;
+
+  /* subtle shaded effect */
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.45);
+}
+  </style>
+
+</head>
+<body>
+  <script>
+    // Initialize jsPsych
+    const jsPsych = initJsPsych({
+     show_progress_bar: true,
+      // on_finish: function() {
+      //   jsPsych.data.displayData();
+      // }
+    });
+
+    const DATAPIPE_EXPERIMENT_ID = "REPLACE_WITH_EXP1_ID";
+
+    const subject_id = jsPsych.randomization.randomID(10);
+
+    // Randomly assign participant to one of 16 counterbalancing cells:
+    // 8 stimulus lists × 2 Yes/No button orders
+    const assignment_cell = Math.floor(Math.random() * 16);
+
+    // Assign one of the 8 experimental lists
+    const list_number = (assignment_cell % 8) + 1;
+
+    // Independently counterbalance button order
+    const response_buttons =
+      assignment_cell < 8
+        ? ["예", "아니요"]
+        : ["아니요", "예"];
+
+    jsPsych.data.addProperties({
+      subject_id: subject_id,
+      list_number: list_number,
+      yes_no_order: response_buttons.join("|")
+    });
+
+    //Store each trial in a list called timeline 
+    const timeline = [];
+
+    // Consent language shown by default
+let consent_language = "ko";
+
+// Consent
+const consent = {
+  type: jsPsychHtmlButtonResponse,
+
+  stimulus: `
+    <div class="consent">
+
+      <!-- Language selection -->
+      <div style="text-align: center; margin-bottom: 30px;">
+        <button
+          type="button"
+          id="show-korean"
+          style="padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer;">
+          한국어
+        </button>
+
+        <button
+          type="button"
+          id="show-english"
+          style="padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer;">
+          English
+        </button>
+      </div>
+
+
+      <!-- KOREAN VERSION -->
+      <div id="consent-korean">
+
+        <p>연구책임자: 홍준선</p>
+        <p>연구 제목: Kor Scope</p>
+        <p>IRB 번호: XXXXX</p>
+
+        <p style="text-align: center;">
+          <strong>연구 설명</strong>
+        </p>
+
+        <p>
+          귀하는 언어와 의사소통에 관한 연구에 참여하도록 요청받았습니다.
+          본 연구의 목적은 한국어 모국어 화자들이 문장을 어떻게 사용하고 해석하는지 이해하는 것입니다.
+          본 연구에 참여하기로 결정하시면, 한국어로 작성된 여러 문장을 읽거나, 그림을 보고 관련된 질문에 답하게 됩니다.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>소요 시간</strong>
+        </p>
+
+        <p>
+          본 실험은 30분 이내로 진행될 예정입니다.
+          귀하는 언제든지 연구 참여를 중단할 수 있습니다.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>위험 및 이점</strong>
+        </p>
+
+        <p>
+          본 연구 참여로 인해 일상생활에서 일반적으로 경험하는 수준을 넘어서는
+          알려진 위험은 없습니다.
+          또한 본 연구 참여를 통해 귀하가 직접적인 혜택을 받을 것이라고
+          보장하거나 약속할 수 없습니다.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>보상</strong>
+        </p>
+
+        <p>
+          연구 참여에 대한 보상으로 5,000원을 받게 됩니다.
+          연구를 완료하지 않는 경우에는 실제 참여한 시간에 비례하여
+          보상이 지급됩니다.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>연구 참여자의 권리</strong>
+        </p>
+
+        <p>
+          본 동의서를 읽고 연구에 자발적으로 참여하실 수 있습니다.
+          귀하는 언제든지 동의를 철회하거나 연구 참여를 중단할 수 있으며, 이 경우 실험은 즉각 중단됩니다.
+          이로 인한 불이익은 전혀 없습니다.
+        </p>
+
+        <p>
+          본 연구의 결과는 학회에서 발표되거나
+          학술지에 출판될 수 있습니다.
+          연구 결과를 발표하거나 작성된 자료에 포함할 때
+          귀하의 개인 정보는 보호됩니다.
+          본 연구에서 수집된 자료는 개인을 식별할 수 있는 정보를 제거한 후
+          추가적인 동의 없이 향후 연구에 사용되거나
+          다른 연구자들과 공유될 수 있습니다.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>연락처</strong>
+        </p>
+
+        <p>
+          <strong>연구 관련 문의:</strong>
+          본 연구, 연구 절차, 위험 및 이점에 관한 질문, 우려 사항 또는 불만 사항이 있는 경우
+          연구책임자 홍준선 (junseonh@stanford.edu)에게 연락해 주십시오.
+        </p>
+
+        <p>
+          <strong>독립적인 문의:</strong>
+          본 연구의 진행 방식에 만족하지 않거나,
+          연구 또는 연구 참여자로서의 권리에 관한 우려, 불만 혹은 일반적인 질문이 있는 경우,
+          연구팀과 독립적인 담당자와 상담하기 위해 Stanford Institutional Review Board (IRB)에
+          +1-650-723-2480 또는 수신자 부담 전화 +1-866-680-2906으로 연락하거나
+          irbnonmed@stanford.edu로 이메일을 보내실 수 있습니다.
+          또한 Stanford IRB, Stanford University,
+          1705 El Camino Real, Palo Alto, CA 94306으로 서신을 보내실 수 있습니다.
+        </p>
+
+        <p>
+          기록을 위해 이 페이지를 저장하거나 인쇄해 두시기 바랍니다.
+        </p>
+
+        <h3>
+          본 연구 참여에 동의하시면 아래의
+          “동의하고 계속 / Agree and Continue” 버튼을 눌러 주세요.
+        </h3>
+
+      </div>
+
+
+      <!-- ENGLISH VERSION -->
+      <div id="consent-english" style="display: none;">
+
+        <p>Protocol Director: Junseon Hong</p>
+        <p>Protocol Title: Kor Scope</p>
+        <p>IRB# 77226</p>
+
+        <p style="text-align: center;">
+          <strong>DESCRIPTION</strong>
+        </p>
+
+        <p>
+          You are invited to participate in a research study about language and communication.
+          The purpose of the research is to understand how you interact and communicate with
+          other people in naturalistic settings as a fluent Korean speaker.
+          If you decide to participate in this research, you will answer questions on how you
+          feel or think by reading a number of sentences written in Korean.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>TIME INVOLVEMENT</strong>
+        </p>
+
+        <p>
+          The task will last less than 30 minutes.
+          You are free to withdraw from the study at any time.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>RISKS AND BENEFITS</strong>
+        </p>
+
+        <p>
+          There are no known risks beyond those you encounter in everyday life.
+          We cannot and do not guarantee or promise that you will receive any benefits
+          from this study.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>PAYMENTS</strong>
+        </p>
+
+        <p>
+          You will receive payment of 5,000 Korean Won.
+          If you do not complete this study, you will receive prorated payment
+          based on the time that you have spent.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>PARTICIPANT'S RIGHTS</strong>
+        </p>
+
+        <p>
+          If you have read this form and have decided to participate in this project,
+          please understand your participation is voluntary and you have the right to
+          withdraw your consent or discontinue participation at any time without penalty
+          or loss of benefits to which you are otherwise entitled.
+          The alternative is not to participate.
+          You have the right to refuse to answer particular questions.
+        </p>
+
+        <p>
+          The results of this research study may be presented at scientific or professional
+          meetings or published in scientific journals.
+          Your individual privacy will be maintained in all published and written data
+          resulting from the study.
+          In accordance with scientific norms, the data from this study may be used or shared
+          with other researchers for future research after removing personally identifying
+          information, without additional consent from you.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>CONTACT INFORMATION</strong>
+        </p>
+
+        <p>
+          <strong>Questions:</strong>
+          If you have any questions, concerns, or complaints about this research,
+          its procedures, risks, and benefits, contact the Protocol Director,
+          Junseon Hong (junseonh@stanford.edu).
+        </p>
+
+        <p>
+          <strong>Independent Contact:</strong>
+          If you are not satisfied with how this study is being conducted,
+          or if you have any concerns, complaints, or general questions about the research
+          or your rights as a participant, please contact the Stanford Institutional Review
+          Board (IRB) to speak to someone independent of the research team at
+          650-723-2480 or toll free at 1-866-680-2906,
+          or email irbnonmed@stanford.edu.
+          You can also write to the Stanford IRB, Stanford University,
+          1705 El Camino Real, Palo Alto, CA 94306.
+        </p>
+
+        <p>
+          Please save or print a copy of this page for your records.
+        </p>
+
+        <h3>
+          If you agree to participate in this research,
+          please click “동의하고 계속 / Agree and Continue” below.
+        </h3>
+
+      </div>
+
+    </div>
+  `,
+
+  choices: ["동의하고 계속 / Agree and Continue"],
+
+  data: {
+    phase: "consent"
+  },
+
+  on_load: function() {
+
+    const korean = document.getElementById("consent-korean");
+    const english = document.getElementById("consent-english");
+
+    const koreanButton = document.getElementById("show-korean");
+    const englishButton = document.getElementById("show-english");
+
+
+    // Show Korean
+    koreanButton.addEventListener("click", function() {
+      korean.style.display = "block";
+      english.style.display = "none";
+
+      consent_language = "ko";
+    });
+
+
+    // Show English
+    englishButton.addEventListener("click", function() {
+      korean.style.display = "none";
+      english.style.display = "block";
+
+      consent_language = "en";
+    });
+  },
+
+  on_finish: function(data) {
+    data.consent_language = consent_language;
+  }
+};
+
+timeline.push(consent);
+
+    // Instructions
+    const instructions= {
+      type: jsPsychInstructions,
+      pages: [`
+        <div class="content">
+          <h2>실험에 참여해주셔서 감사드립니다!</h2><br>
+          <div class="inst-box">
+          <p>이 실험에서는 두개의 문장을 읽게 됩니다.</p>
+          <p>두 문장을 순서대로 읽었을 때, 의미가 자연스럽게 이해되는지 판단해 주세요.</p>
+          <p>자연스럽다고 생각하면 <strong>“예”</strong>, 그렇지 않다고 생각하면 <strong>“아니요”</strong>를 선택해 주세요.</p>
+          <p>너무 오래 고민하지 마시고, 처음 읽었을때의 느낌이 얼마나 자연스러운지에 따라 답변해 주세요.</p>
+          </div>
+        </div>
+        `,
+     `
+        
+          <h3>예를 들어,</h3>
+        <div class="inst-box">
+          <p style="font-size: 22px;font-weight: 500;">
+            민수가 지수를 도와주었다.
+            다시 말해, 지수는 민수에게 도움을 받았다.
+          </p>
+        </div>
+        
+          <p style="margin-top:28px;">
+            <h3>이 경우 두 번째 문장은 첫 번째 문장을 자연스럽게 다시 말한 것이므로
+            <strong>“예”</strong>를 선택합니다.</h3>
+          </p>
+        `
+      ],
+      show_clickable_nav: true,
+      button_label_previous: "이전",
+      button_label_next: "다음",
+      data: { phase: "instructions" }
+    };
+
+    timeline.push(instructions);
+
+    timeline.push({
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+      <div class="begin-box">
+        <p>준비가 되시면 아래의 버튼을 눌러 시작해주세요.</p> 
+        <p>별도의 시간제한은 없습니다.</p>
+      </div>
+    `,
+    choices: ["시작"],
+    data: { phase: "begin_main" }
+  });
+
+    //Run the experiment 
+    function makeMeaningTrial(item) {
+    return {
+      type: jsPsychHtmlButtonResponse,
+
+      stimulus: `
+      <div class="trial-card">
+
+        <div class="sentence-box">
+          <p class="target-sentence">${item.sentence}</p> <p class="probe-sentence">다시 말해, ${item.probe}</p>
+        </div>
+
+        <p class="trial-question">
+          두 문장이 자연스럽게 연결되나요?
+        </p>
+
+      </div>
+    `,
+
+      choices: response_buttons,
+
+      data: {
+        item_id: item.id,
+        item_type: item.trial_type,
+        sentence: item.sentence,
+        probe: item.probe,
+        // Add these variables only when they exist
+        ...(item.filler_type != null
+          ? { filler_type: item.filler_type }
+          : {}),
+
+        ...(item.qp_position != null
+          ? { qp_position: item.qp_position }
+          : {}),
+
+        ...(item.negation_form != null
+          ? { negation_form: item.negation_form }
+          : {}),
+
+        ...(item.probe_type != null
+          ? { probe_type: item.probe_type }
+          : {}),
+
+        ...(item.expected_response != null
+          ? { expected_response: item.expected_response }
+          : {})
+      },
+
+      on_finish: function(data) {
+        const selected_label = response_buttons[data.response];
+
+        data.response_label = selected_label;
+        data.response_binary = selected_label === "예" ? "yes" : "no";
+
+         // Only fillers and attention checks have a correct answer
+        if (data.expected_response !== undefined) {
+
+        data.correct =
+          data.response_binary === data.expected_response;
+        }
+
+        // Remove jsPsych fields that we do not need
+        delete data.rt;
+        delete data.stimulus;
+        delete data.response;
+        delete data.trial_type;
+        delete data.trial_index;
+        delete data.plugin_version;
+        delete data.time_elapsed;
+        }
+    };
+  }
+
+
+  const experimental_conditions = [
+    { qp_position: "object",  negation_form: "LFN", probe_type: "surface" },
+    { qp_position: "object",  negation_form: "LFN", probe_type: "inverse" },
+    { qp_position: "object",  negation_form: "SFN", probe_type: "surface" },
+    { qp_position: "object",  negation_form: "SFN", probe_type: "inverse" },
+    { qp_position: "subject", negation_form: "LFN", probe_type: "surface" },
+    { qp_position: "subject", negation_form: "LFN", probe_type: "inverse" },
+    { qp_position: "subject", negation_form: "SFN", probe_type: "surface" },
+    { qp_position: "subject", negation_form: "SFN", probe_type: "inverse" }
+  ];
+
+  // ============================================================
+  // CHECK THAT STIMULUS FILE LOADED
+  // ============================================================
+
+  if (
+    !Array.isArray(window.EXP1_STIMULI) ||
+    !Array.isArray(window.EXP1_FILLERS) ||
+    !Array.isArray(window.EXP1_ATTENTION)
+  ) {
+
+    timeline.push({
+
+      type: jsPsychHtmlKeyboardResponse,
+
+      stimulus: `
+        <div class="error-box">
+          <h2>Stimulus file not loaded</h2>
+
+          <p>
+            <code>stims.js</code> must define:
+          </p>
+
+          <p>
+            <code>window.EXP1_STIMULI</code><br>
+            <code>window.EXP1_FILLERS</code><br>
+            <code>window.EXP1_ATTENTION</code>
+          </p>
+        </div>
+      `,
+
+      choices: "NO_KEYS"
+    });
+
+  } else {
+
+    // ============================================================
+    // 1. SELECT 32 TARGETS
+    // ============================================================
+    //
+    // Each participant sees:
+    // 4 OBJ LFN surface
+    // 4 OBJ LFN inverse
+    // 4 OBJ SFN surface
+    // 4 OBJ SFN inverse
+    // 4 SUBJ LFN surface
+    // 4 SUBJ LFN inverse
+    // 4 SUBJ SFN surface
+    // 4 SUBJ SFN inverse
+    //
+    // = 32 targets
+    // ============================================================
+    const selected_targets = window.EXP1_STIMULI.filter(stim => {
+
+    // Items 1–8 start in the 8 different conditions.
+    // Items 9–16 repeat that pattern, etc.
+    const base_condition = (stim.item - 1) % 8;
+
+    // Move the item to the next condition on each experimental list.
+    const condition_index =
+      (base_condition + (list_number - 1)) % 8;
+
+    const required_condition =
+      experimental_conditions[condition_index];
+
+    return (
+      stim.qp_position === required_condition.qp_position &&
+      stim.negation_form === required_condition.negation_form &&
+      stim.probe_type === required_condition.probe_type
+    );
+    });
+
+
+    // ============================================================
+    // 2. SELECT BALANCED FILLERS
+    // ============================================================
+    //
+    // 4 F1
+    // 4 F2
+    // 4 F3
+    // 4 F4
+    //
+    // = 16 fillers
+    //
+    // Within every filler family:
+    // 2 TRUE probes
+    // 2 FALSE probes
+    //
+    // F1 additionally contains:
+    // subject LFN
+    // subject SFN
+    // object LFN
+    // object SFN
+    //
+    // F2–F4:
+    // 2 subject
+    // 2 object
+    // ============================================================
+
+
+    // Helper: find one exact filler
+    function findFiller(
+      filler_type,
+      item_number,
+      position,
+      negation_form,
+      probe_type
+    ) {
+
+      return window.EXP1_FILLERS.find(filler => {
+
+        return (
+
+          filler.filler_type === filler_type
+
+          &&
+
+          filler.item === item_number
+
+          &&
+
+          filler.qp_position === position
+
+          &&
+
+          filler.negation_form === negation_form
+
+          &&
+
+          filler.probe_type === probe_type
+
+        );
+
+      });
+
+    }
+
+
+// ------------------------------------------------------------
+// F1
+// ------------------------------------------------------------
+//
+// One item from each structural condition:
+// SUBJ LFN
+// SUBJ SFN
+// OBJ LFN
+// OBJ SFN
+//
+// Probe polarity alternates across slots.
+// Which lexical set is used rotates across lists.
+// ------------------------------------------------------------
+
+const f1_slots = [
+  {
+    position: "subject",
+    negation: "LFN"
+  },
+  {
+    position: "subject",
+    negation: "SFN"
+  },
+  {
+    position: "object",
+    negation: "LFN"
+  },
+  {
+    position: "object",
+    negation: "SFN"
+  }
+];
+
+const selected_F1 =
+  f1_slots.map((slot, index) => {
+    // Rotate lexical sets 1–6 across experimental lists
+    const item_number =
+      ((list_number - 1 + index) % 6) + 1;
+    // Exactly 2 true + 2 false
+    const probe_type =
+      (index + list_number) % 2 === 0
+        ? "true"
+        : "false";
+    return findFiller(
+      "F1",
+      item_number,
+      slot.position,
+      slot.negation,
+      probe_type
+    );
+  });
+
+    // ------------------------------------------------------------
+    // F2, F3, F4
+    // ------------------------------------------------------------
+    //
+    // For each family:
+    // 2 subject
+    // 2 object
+    // 2 true
+    // 2 false
+    // ------------------------------------------------------------
+
+    function selectFourFromFillerFamily(filler_type) {
+
+      const positions = [
+        "subject",
+        "subject",
+        "object",
+        "object"
+      ];
+
+
+      return positions.map((position, index) => {
+
+        // Rotate lexical sets 1–6 across lists
+        const item_number =
+          ((list_number - 1 + index) % 6) + 1;
+
+        // Exactly 2 true and 2 false
+        const probe_type =
+          (index + list_number) % 2 === 0
+            ? "true"
+            : "false";
+
+
+        return findFiller(
+          filler_type,
+          item_number,
+          position,
+          null,
+          probe_type
+        );
+
+      });
+
+    }
+
+    const selected_F2 =
+      selectFourFromFillerFamily("F2");
+
+    const selected_F3 =
+      selectFourFromFillerFamily("F3");
+
+    const selected_F4 =
+      selectFourFromFillerFamily("F4");
+
+    const selected_fillers = [
+      ...selected_F1,
+      ...selected_F2,
+      ...selected_F3,
+      ...selected_F4
+    ];
+
+    // ============================================================
+    // 3. SELECT 4 ATTENTION CHECKS
+    // ============================================================
+    //
+    // Exactly:
+    // 2 expected YES
+    // 2 expected NO
+    //
+    // Also prevent the same base attention item from occurring twice.
+    // ============================================================
+
+    const attention_true =
+      window.EXP1_ATTENTION.filter(
+        item => item.expected_response === "yes"
+      );
+
+    const attention_false =
+      window.EXP1_ATTENTION.filter(
+        item => item.expected_response === "no"
+      );
+
+
+    // Randomly choose 2 YES attention checks
+    const selected_attention_true =
+      jsPsych.randomization.sampleWithoutReplacement(
+        attention_true,
+        2
+      );
+
+
+    // Avoid selecting another version of the same base item
+    const used_attention_items =
+      selected_attention_true.map(
+        item => item.item
+      );
+
+
+    const available_attention_false =
+      attention_false.filter(
+        item =>
+          !used_attention_items.includes(item.item)
+      );
+
+
+    // Randomly choose 2 NO attention checks
+    const selected_attention_false =
+      jsPsych.randomization.sampleWithoutReplacement(
+        available_attention_false,
+        2
+      );
+
+
+    const selected_attention = [
+
+      ...selected_attention_true,
+      ...selected_attention_false
+
+    ];
+
+
+
+    // ============================================================
+    // COMBINE TRIALS WITH CONSTRAINED RANDOMIZATION
+    // ============================================================
+    //
+    // 32 targets
+    // 16 fillers
+    // 4 attention checks
+    //
+    // Every filler/attention trial is separated from the next
+    // filler/attention trial by at least one target.
+    // ============================================================
+
+
+    // Randomize targets
+    const randomized_targets =
+      jsPsych.randomization.shuffle(
+        selected_targets
+      );
+
+
+    // Combine fillers + attention checks
+    const non_targets = [
+      ...selected_fillers,
+      ...selected_attention
+    ];
+
+
+    // Randomize fillers + attention checks
+    const randomized_non_targets =
+      jsPsych.randomization.shuffle(
+        non_targets
+      );
+
+
+    // There are 33 possible gaps around 32 targets:
+    //
+    // gap 0
+    // TARGET
+    // gap 1
+    // TARGET
+    // gap 2
+    // ...
+    // TARGET
+    // gap 32
+    //
+    // Put each non-target into a different gap.
+    // This guarantees that two non-target trials can never
+    // appear consecutively.
+
+    const possible_gaps =
+      Array.from(
+        { length: randomized_targets.length + 1 },
+        (_, index) => index
+      );
+
+
+    const selected_gaps =
+      jsPsych.randomization.sampleWithoutReplacement(
+        possible_gaps,
+        randomized_non_targets.length
+      );
+
+
+    // Associate one non-target trial with each selected gap
+    const gap_trials = {};
+
+    selected_gaps.forEach((gap, index) => {
+      gap_trials[gap] =
+        randomized_non_targets[index];
+    });
+
+
+    // Build the final trial sequence
+    const randomized_trials = [];
+
+    for (
+      let i = 0;
+      i <= randomized_targets.length;
+      i++
+    ) {
+
+      // Add a filler/attention check if this gap was selected
+      if (gap_trials[i] !== undefined) {
+        randomized_trials.push(
+          gap_trials[i]
+        );
+      }
+
+      // Then add the next target
+      if (i < randomized_targets.length) {
+        randomized_trials.push(
+          randomized_targets[i]
+        );
+      }
+
+    }
+
+    // Add all 52 trials to timeline
+    randomized_trials.forEach(item => {
+      timeline.push( 
+        makeMeaningTrial(item)
+      );
+    });
+
+    const filename = `${subject_id}_exp1.csv`;
+
+    if (DATAPIPE_EXPERIMENT_ID === "REPLACE_WITH_EXP1_ID") {
+
+
+      // Show only the main experimental data
+    timeline.push({
+
+    type: jsPsychHtmlKeyboardResponse,
+
+  stimulus: function() {
+
+  // Only show targets, fillers, and attention checks
+  const experiment_data =
+    jsPsych.data
+      .get()
+      .values()
+      .filter(data =>
+
+        data.item_type === "target"
+
+        ||
+
+        data.item_type === "filler"
+
+        ||
+
+        data.item_type === "attention"
+
+      );
+
+
+  return `
+    <div
+      style="
+        text-align:left;
+        max-width:1000px;
+        margin:auto;
+      "
+    >
+
+      <h2>
+        Collected experimental data
+      </h2>
+
+      <pre
+        style="
+          white-space:pre-wrap;
+          background:#f8fafc;
+          padding:20px;
+          border-radius:10px;
+          font-size:14px;
+          overflow:auto;
+        "
+      >${JSON.stringify(
+        experiment_data,
+        null,
+        2
+      )}</pre>
+
+    </div>
+  `;
+},
+
+choices: "NO_KEYS"
+});
+
+} else {
+timeline.push({
+
+  type: jsPsychPipe,
+
+  action: "save",
+
+  experiment_id:
+    DATAPIPE_EXPERIMENT_ID,
+
+  filename: filename,
+
+  data_string: () => {
+
+    const relevant_data =
+      jsPsych.data
+        .get()
+        .filterCustom(data =>
+
+          data.item_type === "target"
+
+          ||
+
+          data.item_type === "filler"
+
+          ||
+
+          data.item_type === "attention"
+
+        );
+
+    return relevant_data.csv();
+
+  }
+
+  });
+
+    // End-of-experiment screen
+    timeline.push({
+      type: jsPsychHtmlButtonResponse,
+      stimulus: `
+        <div class="saving-box">
+          <h2>Local test mode</h2>
+          <p>실험이 끝났습니다.</p>
+          <p>아래 버튼을 눌러 수집된 데이터를 확인해 주세요.</p>
+        </div>
+      `,
+      choices: ["데이터 확인"],
+      data: { phase: "local_test" }
+    });
+
+      timeline.push({
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `
+          <div class="completion-box">
+            <h2>실험이 끝났습니다.</h2>
+            <p>참여해 주셔서 감사합니다.</p>
+            <p>응답이 저장되었습니다. 이제 이 창을 닫으셔도 됩니다.</p>
+          </div>
+        `,
+        choices: "NO_KEYS",
+        data: { phase: "completion" }
+      });
+    }
+  }
+
+  jsPsych.run(timeline);
+  </script>
+</body>
+</html>

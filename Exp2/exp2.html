@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 2</title>
+  <!-- Load JsPsych -->
+  <script src="https://unpkg.com/jspsych@8.3.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-instructions@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-preload@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
+  <script src="stims_exp2.js"></script>
+  
+  <link href="https://unpkg.com/jspsych@8.3.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+
+  <!--Load Font-->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* General page */
+    body,
+    .jspsych-content,
+    .jspsych-content-wrapper {
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+  
+    body {
+      background-color: #f4f6f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+  
+    .jspsych-content-wrapper {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 20px 40px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  
+    h1,
+    h2,
+    h3 {
+      color: #2c3e50;
+    }
+  
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+  
+    /* jsPsych buttons */
+    .jspsych-btn {
+      font-size: 14px;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 8px;
+      background-color: #64748b;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  
+    .jspsych-btn:hover {
+      background-color: #475569;
+    }
+  
+    /* Consent */
+    .jspsych-content .consent p {
+      font-size: 16px;
+      line-height: 1.4;
+      text-align: justify;
+    }
+  
+    .jspsych-content .consent h3 {
+      font-size: 18px;
+      line-height: 1.4;
+    }
+  
+  
+    /* ---------- Instructions ---------- */
+  
+    .content {
+      margin-top: 20px;
+    }
+  
+    .example-box {
+      background: paleturquoise;
+      padding: 12px 12px;
+      border-radius: 12px;
+      text-align: center;
+    }
+  
+    .jspsych-instructions-nav {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .inst-box{
+      background-color: lemonchiffon;
+      border-radius: 12px;
+      padding: 18px;
+    }
+  
+  
+    /* ---------- Start screen ---------- */
+  
+    .begin-box {
+      background-color: #e0f2fe;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+    }
+  
+    .begin-box p {
+      font-size: 22px;
+      font-weight: 500;
+    }
+  
+  
+   /* ---------- Experimental trials ---------- */
+
+  :root {
+    --stimulus-width: 650px;
+  }
+
+  .trial-card {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .trial-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .sentence-box {
+    background-color: #f8fafc;
+    padding: 20px 25px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+
+  .target-sentence,
+  .probe-sentence {
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .meaning-arrow {
+    font-size: 28px;
+    margin: 15px 0;
+    color: #64748b;
+  }
+
+  .reformulation-marker {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 22px 0;
+    color: #64748b;
+  }
+
+  .trial-question {
+    font-size: 19px;
+    font-weight: 500;
+    margin-top: 30px;
+  }
+
+  .picture-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .picture-description {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 10px 0 15px 0;
+  }
+
+  .context-block,
+  .critical-block {
+    width: var(--stimulus-width);
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .critical-block {
+    margin-top: 25px;
+  }
+
+  .experiment-image {
+    width: 100%;
+    max-width: var(--stimulus-width);
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .jspsych-content-wrapper {
+    align-items: flex-start;
+  }
+
+  .stage1-context {
+    transform: translateY(-172px);
+  }
+
+  .target-box {
+    margin-top: 25px;
+  }
+
+  .context-stage .jspsych-btn {
+    transform: translateY(100px);
+  }
+
+    /* ---------- Local test / saving ---------- */
+  
+    .saving-box {
+      background-color: #ecfdf5;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+    }
+  
+    .saving-box h2 {
+      margin-top: 0;
+      color: #047857;
+    }
+  
+  
+    /* ---------- Completion ---------- */
+  
+    .completion-box {
+      background-color: #f0fdf4;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+    }
+  
+    .completion-box h2 {
+      margin-top: 0;
+      color: #15803d;
+    }
+  
+  
+    /* ---------- Error screen ---------- */
+  
+    .error-box {
+      padding: 30px;
+      text-align: center;
+    }
+  
+  
+    /* Progress bar */
+  
+    #jspsych-progressbar-container {
+      background-color: #f3f7f4;
+      padding: 10px 0;
+      margin-bottom: 20px;
+    }
+
+    #jspsych-progressbar-outer {
+      width: 90%;
+      margin: 0 auto;
+      height: 12px;
+      background-color: #dfe9e2;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    #jspsych-progressbar-inner {
+      height: 100%;
+
+      /* light green → darker green */
+      background: linear-gradient(
+        90deg,
+        #b7d9c2 0%,
+        #74b68b 55%,
+        #3f8f5f 100%
+      );
+
+      transition: width 0.4s ease;
+      border-radius: 8px;
+
+    /* subtle shaded effect */
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.45);
+    }
+
+  </style>
+
+</head>
+<body>
+  <script>
+    // Initialize jsPsych
+    const jsPsych = initJsPsych({
+     show_progress_bar: true,
+      // on_finish: function() {
+      //   jsPsych.data.displayData();
+      // }
+    });
+
+    const DATAPIPE_EXPERIMENT_ID = "REPLACE_WITH_EXP1_ID";
+
+    const subject_id = jsPsych.randomization.randomID(10);
+
+    
+    // ============================================================
+    // EXPERIMENTAL LIST
+    // ============================================================
+    //
+    // Final experiment:
+    //
+    // 4 stimulus lists:
+    //
+    // 1 = OBJ ES / OBJ EF / SUBJ ES / SUBJ EF rotation
+    // 2 = rotate one step
+    // 3 = rotate two steps
+    // 4 = rotate three steps
+    //
+    // For now you can test different lists using:
+    //
+    // exp2.html?list=1
+    // exp2.html?list=2
+    // exp2.html?list=3
+    // exp2.html?list=4
+    //
+    // ============================================================
+
+    const urlParams =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    let list_number =
+      parseInt(
+        urlParams.get("list"),
+        10
+      );
+
+
+    if (
+      ![1, 2, 3, 4].includes(
+        list_number
+      )
+      ) {
+      list_number = 1;
+    }
+
+
+    // ============================================================
+    // YES / NO BUTTON ORDER
+    // ============================================================
+    //
+    // Test:
+    //
+    // exp2.html?list=1&buttons=yes-first
+    //
+    // or:
+    //
+    // exp2.html?list=1&buttons=no-first
+    //
+    // ============================================================
+
+    const button_order =
+      urlParams.get("buttons");
+
+    const response_buttons =
+
+      button_order === "no-first"
+
+        ? ["아니요", "예"]
+
+        : ["예", "아니요"];
+
+    // ============================================================
+    // GLOBAL PARTICIPANT DATA
+    // ============================================================
+
+    jsPsych.data.addProperties({
+      subject_id: subject_id,
+      experiment: "Exp2",
+      list_number: list_number,
+      yes_no_order: response_buttons.join("|")
+    });
+
+    // ============================================================
+    // TIMELINE
+    // ============================================================
+
+    const timeline = [];
+
+
+    // ============================================================
+    // MAIN EXPERIMENT
+    // ============================================================
+
+
+
+    // ============================================================
+    // PRELOAD IMAGES
+    // ============================================================
+    const image_files = [
+      ...new Set(
+        window.EXP2_STIMULI.flatMap(item => [
+          item.context_image,
+          item.critical_image
+        ])
+      )
+    ];
+
+    timeline.push({
+      type: jsPsychPreload,
+
+      images: image_files,
+
+      message:
+        "<p>실험 자료를 불러오는 중입니다...</p>"
+    });
+
+
+      // Consent language shown by default
+let consent_language = "ko";
+
+// Consent
+const consent = {
+  type: jsPsychHtmlButtonResponse,
+
+  stimulus: `
+    <div class="consent">
+
+      <!-- Language selection -->
+      <div style="text-align: center; margin-bottom: 30px;">
+        <button
+          type="button"
+          id="show-korean"
+          style="padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer;">
+          한국어
+        </button>
+
+        <button
+          type="button"
+          id="show-english"
+          style="padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer;">
+          English
+        </button>
+      </div>
+
+
+      <!-- KOREAN VERSION -->
+      <div id="consent-korean">
+
+        <p>연구책임자: 홍준선</p>
+        <p>연구 제목: Kor Scope</p>
+        <p>IRB 번호: XXXXX</p>
+
+        <p style="text-align: center;">
+          <strong>연구 설명</strong>
+        </p>
+
+        <p>
+          귀하는 언어와 의사소통에 관한 연구에 참여하도록 요청받았습니다.
+          본 연구의 목적은 한국어 모국어 화자들이 문장을 어떻게 사용하고 해석하는지 이해하는 것입니다.
+          본 연구에 참여하기로 결정하시면, 한국어로 작성된 여러 문장을 읽거나, 그림을 보고 관련된 질문에 답하게 됩니다.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>소요 시간</strong>
+        </p>
+
+        <p>
+          본 실험은 30분 이내로 진행될 예정입니다.
+          귀하는 언제든지 연구 참여를 중단할 수 있습니다.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>위험 및 이점</strong>
+        </p>
+
+        <p>
+          본 연구 참여로 인해 일상생활에서 일반적으로 경험하는 수준을 넘어서는
+          알려진 위험은 없습니다.
+          또한 본 연구 참여를 통해 귀하가 직접적인 혜택을 받을 것이라고
+          보장하거나 약속할 수 없습니다.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>보상</strong>
+        </p>
+
+        <p>
+          연구 참여에 대한 보상으로 5,000원을 받게 됩니다.
+          연구를 완료하지 않는 경우에는 실제 참여한 시간에 비례하여
+          보상이 지급됩니다.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>연구 참여자의 권리</strong>
+        </p>
+
+        <p>
+          본 동의서를 읽고 연구에 자발적으로 참여하실 수 있습니다.
+          귀하는 언제든지 동의를 철회하거나 연구 참여를 중단할 수 있으며, 이 경우 실험은 즉각 중단됩니다.
+          이로 인한 불이익은 전혀 없습니다.
+        </p>
+
+        <p>
+          본 연구의 결과는 학회에서 발표되거나
+          학술지에 출판될 수 있습니다.
+          연구 결과를 발표하거나 작성된 자료에 포함할 때
+          귀하의 개인 정보는 보호됩니다.
+          본 연구에서 수집된 자료는 개인을 식별할 수 있는 정보를 제거한 후
+          추가적인 동의 없이 향후 연구에 사용되거나
+          다른 연구자들과 공유될 수 있습니다.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>연락처</strong>
+        </p>
+
+        <p>
+          <strong>연구 관련 문의:</strong>
+          본 연구, 연구 절차, 위험 및 이점에 관한 질문, 우려 사항 또는 불만 사항이 있는 경우
+          연구책임자 홍준선 (junseonh@stanford.edu)에게 연락해 주십시오.
+        </p>
+
+        <p>
+          <strong>독립적인 문의:</strong>
+          본 연구의 진행 방식에 만족하지 않거나,
+          연구 또는 연구 참여자로서의 권리에 관한 우려, 불만 혹은 일반적인 질문이 있는 경우,
+          연구팀과 독립적인 담당자와 상담하기 위해 Stanford Institutional Review Board (IRB)에
+          +1-650-723-2480 또는 수신자 부담 전화 +1-866-680-2906으로 연락하거나
+          irbnonmed@stanford.edu로 이메일을 보내실 수 있습니다.
+          또한 Stanford IRB, Stanford University,
+          1705 El Camino Real, Palo Alto, CA 94306으로 서신을 보내실 수 있습니다.
+        </p>
+
+        <p>
+          기록을 위해 이 페이지를 저장하거나 인쇄해 두시기 바랍니다.
+        </p>
+
+        <h3>
+          본 연구 참여에 동의하시면 아래의
+          “동의하고 계속 / Agree and Continue” 버튼을 눌러 주세요.
+        </h3>
+
+      </div>
+
+
+      <!-- ENGLISH VERSION -->
+      <div id="consent-english" style="display: none;">
+
+        <p>Protocol Director: Junseon Hong</p>
+        <p>Protocol Title: Kor Scope</p>
+        <p>IRB# 77226</p>
+
+        <p style="text-align: center;">
+          <strong>DESCRIPTION</strong>
+        </p>
+
+        <p>
+          You are invited to participate in a research study about language and communication.
+          The purpose of the research is to understand how you interact and communicate with
+          other people in naturalistic settings as a fluent Korean speaker.
+          If you decide to participate in this research, you will answer questions on how you
+          feel or think by reading a number of sentences written in Korean.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>TIME INVOLVEMENT</strong>
+        </p>
+
+        <p>
+          The task will last less than 30 minutes.
+          You are free to withdraw from the study at any time.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>RISKS AND BENEFITS</strong>
+        </p>
+
+        <p>
+          There are no known risks beyond those you encounter in everyday life.
+          We cannot and do not guarantee or promise that you will receive any benefits
+          from this study.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>PAYMENTS</strong>
+        </p>
+
+        <p>
+          You will receive payment of 5,000 Korean Won.
+          If you do not complete this study, you will receive prorated payment
+          based on the time that you have spent.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>PARTICIPANT'S RIGHTS</strong>
+        </p>
+
+        <p>
+          If you have read this form and have decided to participate in this project,
+          please understand your participation is voluntary and you have the right to
+          withdraw your consent or discontinue participation at any time without penalty
+          or loss of benefits to which you are otherwise entitled.
+          The alternative is not to participate.
+          You have the right to refuse to answer particular questions.
+        </p>
+
+        <p>
+          The results of this research study may be presented at scientific or professional
+          meetings or published in scientific journals.
+          Your individual privacy will be maintained in all published and written data
+          resulting from the study.
+          In accordance with scientific norms, the data from this study may be used or shared
+          with other researchers for future research after removing personally identifying
+          information, without additional consent from you.
+        </p>
+
+
+        <p style="text-align: center;">
+          <strong>CONTACT INFORMATION</strong>
+        </p>
+
+        <p>
+          <strong>Questions:</strong>
+          If you have any questions, concerns, or complaints about this research,
+          its procedures, risks, and benefits, contact the Protocol Director,
+          Junseon Hong (junseonh@stanford.edu).
+        </p>
+
+        <p>
+          <strong>Independent Contact:</strong>
+          If you are not satisfied with how this study is being conducted,
+          or if you have any concerns, complaints, or general questions about the research
+          or your rights as a participant, please contact the Stanford Institutional Review
+          Board (IRB) to speak to someone independent of the research team at
+          650-723-2480 or toll free at 1-866-680-2906,
+          or email irbnonmed@stanford.edu.
+          You can also write to the Stanford IRB, Stanford University,
+          1705 El Camino Real, Palo Alto, CA 94306.
+        </p>
+
+        <p>
+          Please save or print a copy of this page for your records.
+        </p>
+
+        <h3>
+          If you agree to participate in this research,
+          please click “동의하고 계속 / Agree and Continue” below.
+        </h3>
+
+      </div>
+
+    </div>
+  `,
+
+  choices: ["동의하고 계속 / Agree and Continue"],
+
+  data: {
+    phase: "consent"
+  },
+
+  on_load: function() {
+
+    const korean = document.getElementById("consent-korean");
+    const english = document.getElementById("consent-english");
+
+    const koreanButton = document.getElementById("show-korean");
+    const englishButton = document.getElementById("show-english");
+
+
+    // Show Korean
+    koreanButton.addEventListener("click", function() {
+      korean.style.display = "block";
+      english.style.display = "none";
+
+      consent_language = "ko";
+    });
+
+
+    // Show English
+    englishButton.addEventListener("click", function() {
+      korean.style.display = "none";
+      english.style.display = "block";
+
+      consent_language = "en";
+    });
+  },
+
+  on_finish: function(data) {
+    data.consent_language = consent_language;
+  }
+};
+
+timeline.push(consent);
+
+
+
+    // ============================================================
+    // INSTRUCTIONS
+    // ============================================================
+
+    timeline.push({
+
+      type: jsPsychInstructions,
+
+      pages: [
+
+        `
+
+        <div class="instruction-box">
+
+          <h2>
+            실험에 참여해 주셔서 감사합니다!
+          </h2>
+
+          <div class="instruction-highlight">
+
+            <p>
+              이 실험에서는 두 개의 그림을 차례로 보게 됩니다.
+            </p>
+
+            <p>
+              첫 번째 그림은 앞서 일어난 상황을,
+              두 번째 그림은 그 다음에 일어난 상황을 보여줍니다.
+            </p>
+
+            <p>
+              두 그림을 잘 살펴본 뒤,
+              아래에 제시되는 문장을 읽어 주세요.
+            </p>
+
+          </div>
+
+        </div>
+
+        `,
+
+
+        `
+
+        <div class="instruction-box">
+
+          <h2>
+            응답 방법
+          </h2>
+
+          <div class="instruction-highlight">
+
+            <p>
+              제시된 문장이
+              <strong>마지막 그림의 상황을 자연스럽게 설명한다고 생각하면</strong>
+              “예”를 선택해 주세요.
+            </p>
+
+            <p>
+              그렇지 않다고 생각하면
+              “아니요”를 선택해 주세요.
+            </p>
+
+            <p>
+              너무 오래 고민하지 마시고,
+              처음 읽었을 때의 느낌에 따라 답변해 주세요.
+            </p>
+
+          </div>
+
+        </div>
+
+        `
+
+      ],
+
+      show_clickable_nav: true,
+
+      button_label_previous:
+        "이전",
+
+      button_label_next:
+        "다음"
+
+    });
+
+
+
+    // ============================================================
+    // BEGIN SCREEN
+    // ============================================================
+
+    timeline.push({
+
+      type:
+        jsPsychHtmlButtonResponse,
+
+      stimulus: `
+
+        <div class="begin-box">
+
+          <p>
+            준비가 되시면 시작해 주세요.
+          </p>
+
+        </div>
+
+      `,
+
+      choices:
+        ["시작"]
+
+    });
+
+    // ============================================================
+    // FOUR EXPERIMENTAL CONDITIONS
+    // ============================================================
+
+    const experimental_conditions = [
+
+      {
+        qp_position:
+          "object",
+
+        context_condition:
+          "ES"
+      },
+
+      {
+        qp_position:
+          "object",
+
+        context_condition:
+          "EF"
+      },
+
+      {
+        qp_position:
+          "subject",
+
+        context_condition:
+          "ES"
+      },
+
+      {
+        qp_position:
+          "subject",
+
+        context_condition:
+          "EF"
+      }
+
+    ];
+
+    // ============================================================
+    // SELECT TARGETS FOR THIS LIST
+    // ============================================================
+
+    const selected_targets =
+      window.EXP2_STIMULI.filter(stim => {
+
+        // Items cycle through the four conditions.
+        // List number rotates that assignment.
+        const base_condition =
+          (stim.item - 1) % 4;
+
+        const condition_index =
+          (
+            base_condition +
+            (list_number - 1)
+          ) % 4;
+
+        const required_condition =
+          experimental_conditions[
+            condition_index
+          ];
+
+        return (
+          stim.qp_position ===
+            required_condition.qp_position
+          &&
+          stim.context_condition ===
+            required_condition.context_condition
+        );
+
+      });
+
+
+    // Randomize order of lexical items
+    const randomized_targets =
+      jsPsych.randomization.shuffle(
+        selected_targets
+      );
+
+    // ============================================================
+    // CONTEXT VIEWING TIME
+    // ============================================================
+
+    let context_viewing_rt = null;
+
+    // ============================================================
+    // STAGE 1: CONTEXT ONLY
+    // ============================================================
+
+    function makeContextTrial(item) {
+
+      return {
+
+        type: jsPsychHtmlButtonResponse,
+
+        stimulus: `
+          <div class="trial-card">
+
+            <div class="context-block stage1-context">
+
+              <p class="picture-description">
+                먼저 다음과 같은 상황이 있었습니다.
+              </p>
+
+              <img
+                class="experiment-image"
+                src="${item.context_image}"
+              >
+
+            </div>
+
+          </div>
+        `,
+
+        choices: ["다음"],
+        css_classes: ["context-stage"],
+
+        data: {
+          item_id: item.id,
+          item_type: "context",
+          context_condition: item.context_condition
+        },
+
+        on_finish: function(data) {
+
+          // Save how long the participant looked at the context
+          context_viewing_rt = data.rt;
+
+        }
+
+      };
+
+    }
+
+
+    // ============================================================
+    // STAGE 2: CONTEXT + CRITICAL PICTURE + SENTENCE
+    // ============================================================
+
+    function makeJudgmentTrial(item) {
+
+      return {
+
+        type: jsPsychHtmlButtonResponse,
+
+        stimulus: `
+
+        <div class="trial-card">
+
+            <div class="context-block">
+
+              <p class="picture-description">
+                먼저 다음과 같은 상황이 있었습니다.
+              </p>
+
+              <img
+                class="experiment-image"
+                src="${item.context_image}"
+              >
+
+            </div>
+
+
+            <div class="critical-block">
+
+              <p class="picture-description">
+                이어서 다음과 같은 상황이 있었습니다.
+              </p>
+
+              <img
+                class="experiment-image"
+                src="${item.critical_image}"
+              >
+
+            </div>
+
+
+            <div class="target-box">
+
+              <p class="target-sentence">
+                ${item.sentence}
+              </p>
+
+            </div>
+
+            <p class="trial-question">
+              이 문장이 두번째 상황을 자연스럽게 설명하나요?
+            </p>
+
+          </div>
+
+      `,
+
+        choices: response_buttons,
+
+        data: {
+
+          item_id: item.id,
+          item_type: "target",
+          item: item.item,
+          qp_position: item.qp_position,
+          context_condition: item.context_condition,
+          sentence: item.sentence,
+          context_image: item.context_image,
+          critical_image: item.critical_image
+
+        },
+
+        on_finish: function(data) {
+
+          const selected_label =
+            response_buttons[data.response];
+
+          data.response_label =
+            selected_label;
+
+          data.response_binary =
+            selected_label === "예"
+              ? "yes"
+              : "no";
+
+
+          // Store how long the context was viewed
+          data.context_viewing_rt =
+            context_viewing_rt;
+
+
+          // Remove fields we don't need
+          delete data.rt;
+          delete data.stimulus;
+          delete data.response;
+          delete data.trial_type;
+          delete data.trial_index;
+          delete data.plugin_version;
+          delete data.time_elapsed;
+
+        }
+
+      };
+
+    }
+
+
+
+    // ============================================================
+    // ADD TARGETS TO TIMELINE
+    // ============================================================
+
+    randomized_targets.forEach(
+      item => {
+
+        // Stage 1: context only
+        timeline.push(
+          makeContextTrial(item)
+        );
+
+        // Stage 2: context + critical picture + judgment
+        timeline.push(
+          makeJudgmentTrial(item)
+        );
+
+      }
+    );
+
+    // ============================================================
+    // LOCAL TEST END SCREEN
+    // ============================================================
+
+    timeline.push({
+
+      type:
+        jsPsychHtmlButtonResponse,
+
+      stimulus: `
+
+        <div class="begin-box">
+
+          <h2>
+            Local test mode
+          </h2>
+
+          <p>
+            실험이 끝났습니다.
+          </p>
+
+          <p>
+            아래 버튼을 눌러
+            수집된 데이터를 확인해 주세요.
+          </p>
+
+        </div>
+
+      `,
+
+      choices:
+        ["데이터 확인"]
+
+    });
+
+
+
+    // ============================================================
+    // DATA PREVIEW
+    // ============================================================
+
+    timeline.push({
+
+      type:
+        jsPsychHtmlKeyboardResponse,
+
+
+      stimulus:
+        function() {
+
+
+          const target_data =
+
+            jsPsych.data
+              .get()
+              .values()
+              .filter(
+
+                data =>
+                  data.item_type
+                  === "target"
+
+              );
+
+
+          return `
+
+            <div class="data-box">
+
+              <h2>
+                Collected target data
+              </h2>
+
+              <pre
+                style="
+                  white-space: pre-wrap;
+                  background: #f8fafc;
+                  padding: 20px;
+                  border-radius: 10px;
+                  font-size: 14px;
+                  overflow: auto;
+                "
+              >${JSON.stringify(
+                target_data,
+                null,
+                2
+              )}</pre>
+
+            </div>
+
+          `;
+
+        },
+
+
+      choices:
+        "NO_KEYS"
+
+    });
+
+
+
+     // END stimulus-loaded check
+
+
+
+    // ============================================================
+    // RUN
+    // ============================================================
+
+    jsPsych.run(
+      timeline
+    );
+
+
+    </script>
+
+
+    </body>
+
+    </html>
