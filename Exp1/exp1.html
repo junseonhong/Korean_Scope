@@ -1024,7 +1024,7 @@ const body =
 
 
 // UTF-8 BOM + CSV
-return header + "\n" + body;
+return "\uFEFF" + header + "\n" + body;
 }
 
 // ============================================================
@@ -1043,8 +1043,20 @@ experiment_id:
 filename:
   filename,
 
-data_string: () =>
-  buildExperimentCSV()
+  data_string: () => {
+  const relevant_data =
+    jsPsych.data
+      .get()
+      .filterCustom(data =>
+        data.item_type === "target"
+        ||
+        data.item_type === "filler"
+        ||
+        data.item_type === "attention"
+      );
+
+  return relevant_data.csv();
+}
 
 });
 
