@@ -249,9 +249,6 @@
     // Initialize jsPsych
     const jsPsych = initJsPsych({
      show_progress_bar: true,
-      // on_finish: function() {
-      //   jsPsych.data.displayData();
-      // }
     });
 
     const DATAPIPE_EXPERIMENT_ID = "DpvkvDr9rv2q";
@@ -271,255 +268,250 @@
         ? ["예", "아니요"]
         : ["아니요", "예"];
 
-    jsPsych.data.addProperties({
-      subject_id: subject_id,
-      list_number: list_number,
-      yes_no_order: response_buttons.join("|")
-    });
-
     //Store each trial in a list called timeline 
     const timeline = [];
 
     // Consent language shown by default
-let consent_language = "ko";
+    let consent_language = "ko";
 
-// Consent
-const consent = {
-  type: jsPsychHtmlButtonResponse,
+    // Consent
+    const consent = {
+      type: jsPsychHtmlButtonResponse,
+      record_data: false,
+      stimulus: `
+        <div class="consent">
 
-  stimulus: `
-    <div class="consent">
+          <!-- Language selection -->
+          <div style="text-align: center; margin-bottom: 30px;">
+            <button
+              type="button"
+              id="show-korean"
+              style="padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer;">
+              한국어
+            </button>
 
-      <!-- Language selection -->
-      <div style="text-align: center; margin-bottom: 30px;">
-        <button
-          type="button"
-          id="show-korean"
-          style="padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer;">
-          한국어
-        </button>
-
-        <button
-          type="button"
-          id="show-english"
-          style="padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer;">
-          English
-        </button>
-      </div>
-
-
-      <!-- KOREAN VERSION -->
-      <div id="consent-korean">
-
-        <p>연구책임자: 홍준선</p>
-        <p>연구 제목: Behavioral Study of Language Comprehension and Interpretation</p>
-        <p>IRB 번호: XXXXX</p>
-
-        <p style="text-align: center;">
-          <strong>연구 관련 문의</strong>
-        </p>
-       
-        <p style="text-align: center;">
-          홍준선, 450 Jane Stanford Way Building 460 Rm. 127, STANFORD, CA, 1-650-723-4284
-        </p>
-
-        <p style="text-align: center;">
-          <strong>연구 개요</strong>
-        </p>
-
-        <p>
-          귀하는 언어와 의사소통에 관한 연구에 참여하도록 안내받았습니다.
-          본 연구의 목적은 사람들이 다양한 맥락에서 문장을 어떻게 사용하고 해석하는지 이해하는 것입니다.
-          귀하는 짧은 문장을 읽거나 그림을 본 후, 제시된 문장을 해석하고 그 문장이 얼마나 자연스러운지 판단하게 됩니다.
-          본 연구 참여는 참여는 자발적이며, 귀하는 언제든지 참여 동의를 철회하실 수 있습니다. 
-        </p>
+            <button
+              type="button"
+              id="show-english"
+              style="padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer;">
+              English
+            </button>
+          </div>
 
 
-        <p style="text-align: center;">
-          <strong>소요 시간</strong>
-        </p>
+          <!-- KOREAN VERSION -->
+          <div id="consent-korean">
 
-        <p>
-          연구 참여에는 약 20분이 소요됩니다.
-        </p>
+            <p>연구책임자: 홍준선</p>
+            <p>연구 제목: Behavioral Study of Language Comprehension and Interpretation</p>
+            <p>IRB 번호: XXXXX</p>
 
-        <p style="text-align: center;">
-          <strong>참여 보상</strong>
-        </p>
+            <p style="text-align: center;">
+              <strong>연구 관련 문의</strong>
+            </p>
+          
+            <p style="text-align: center;">
+              홍준선, 450 Jane Stanford Way Building 460 Rm. 127, STANFORD, CA, 1-650-723-4284
+            </p>
 
-        <p>
-          연구 참여에 대한 보상으로 5,000원을 지급받게 됩니다.
-        </p>
+            <p style="text-align: center;">
+              <strong>연구 개요</strong>
+            </p>
 
-        <p style="text-align: center;">
-          <strong>개인정보 및 비밀유지</strong>
-        </p>
-
-        <p>
-          본 연구 참여로 인해 발생할 수 있는 위험은 낮습니다.
-          귀하의 응답 내용은 외부에 공개되지 않으며, 연구진은 귀하의 개인정보를 보호하기 위한 절차를 마련하고 있습니다.
-          본 연구 결과를 바탕으로 작성되는 보고서나 논문 등의 자료에는 귀하를 식별할 수 있는 정보가 포함되지 않습니다.
-        </p>
-
-         <p style="text-align: center;">
-          <strong>연락처</strong>
-        </p>
-
-        <p>
-          <strong>연구 관련 문의:</strong>
-          연구 내용이나 절차, 연구 참여로 인한 위험 및 이점에 대한 질문, 혹은 연구와 관련된 우려 또는 불만 사항이 있는 경우 연구책임자인 홍준선 (junseonh@stanford.edu, 1-650-723-4284)에게 연락하시기 바랍니다. 
-        </p>
-
-        <p style="text-align: center;">
-          <strong>독립적인 문의처</strong>
-        </p>
-
-        <p>
-          연구의 진행 방식에 만족하지 못하거나, 연구 참여자로서의 권리에 대한 우려, 불만 혹은 일반적인 질문이 있는 경우,
-          연구진과 독립적인 담당자와 상담하기 위해 Stanford Institutional Review Board (IRB)에 
-          650-723-2480 또는 수신자 부담 전화 1-866-680-2906를 통해 연락하실 수 있습니다.
-          또한 irbnonmed@stanford.edu로 Stanford IRB에 이메일을 보낼 수 있습니다.
-        </p>
-
-        <p>
-          기록을 위해 이 페이지를 저장하거나 인쇄해 두시기 바랍니다.
-        </p>
-
-        <h3>
-          연구 참여에 동의하시는 경우, 아래의 “동의하고 계속 / Agree and Continue” 를 클릭해 주십시오.
-        </h3>
-
-      </div>
+            <p>
+              귀하는 언어와 의사소통에 관한 연구에 참여하도록 안내받았습니다.
+              본 연구의 목적은 사람들이 다양한 맥락에서 문장을 어떻게 사용하고 해석하는지 이해하는 것입니다.
+              귀하는 짧은 문장을 읽거나 그림을 본 후, 제시된 문장을 해석하고 그 문장이 얼마나 자연스러운지 판단하게 됩니다.
+              본 연구 참여는 참여는 자발적이며, 귀하는 언제든지 참여 동의를 철회하실 수 있습니다. 
+            </p>
 
 
-      <!-- ENGLISH VERSION -->
-      <div id="consent-english" style="display: none;">
+            <p style="text-align: center;">
+              <strong>소요 시간</strong>
+            </p>
 
-        <p>Protocol Director: Junseon Hong</p>
-        <p>Protocol Title: Behavioral Study of Language Comprehension and Interpretation</p>
-        <p>IRB# XXXXX</p>
+            <p>
+              연구 참여에는 약 20분이 소요됩니다.
+            </p>
 
-        <p style="text-align: center;">
-          <strong>FOR QUESTIONS ABOUT THE STUDY, CONTACT</strong>
-        </p>
-       
-        <p style="text-align: center;">
-          Junseon Hong, 450 Jane Stanford Way, Building 460, Rm. 127, STANFORD, CA, 1-650-723-4284
-        </p>
-        
-        <p style="text-align: center;">
-          <strong>DESCRIPTION</strong>
-        </p>
+            <p style="text-align: center;">
+              <strong>참여 보상</strong>
+            </p>
 
-        <p>
-          You are invited to participate in a research study on language and communication.
-          The purpose of this research is to understand how people use and interpret sentences in different contexts.
-          You will be asked to read short contexts or view pictures and make judgments about sentences based on how you interpret them and what sounds natural to you.
-          Participation in this research is voluntary, and you are free to withdraw your consent at any time. 
-        </p>
+            <p>
+              연구 참여에 대한 보상으로 5,000원을 지급받게 됩니다.
+            </p>
 
-        <p style="text-align: center;">
-          <strong>TIME INVOLVEMENT</strong>
-        </p>
+            <p style="text-align: center;">
+              <strong>개인정보 및 비밀유지</strong>
+            </p>
 
-        <p>
-          Your participation will take approximately 20 minutes.
-        </p>
+            <p>
+              본 연구 참여로 인해 발생할 수 있는 위험은 낮습니다.
+              귀하의 응답 내용은 외부에 공개되지 않으며, 연구진은 귀하의 개인정보를 보호하기 위한 절차를 마련하고 있습니다.
+              본 연구 결과를 바탕으로 작성되는 보고서나 논문 등의 자료에는 귀하를 식별할 수 있는 정보가 포함되지 않습니다.
+            </p>
 
-        <p style="text-align: center;">
-          <strong>PAYMENTS</strong>
-        </p>
+            <p style="text-align: center;">
+              <strong>연락처</strong>
+            </p>
 
-        <p>
-          You will receive 5,000 Korean Won as payment for your participation.
-        </p>
+            <p>
+              <strong>연구 관련 문의:</strong>
+              연구 내용이나 절차, 연구 참여로 인한 위험 및 이점에 대한 질문, 혹은 연구와 관련된 우려 또는 불만 사항이 있는 경우 연구책임자인 홍준선 (junseonh@stanford.edu, 1-650-723-4284)에게 연락하시기 바랍니다. 
+            </p>
 
-        <p style="text-align: center;">
-          <strong>PRIVACY AND CONFIDENTIALITY</strong>
-        </p>
+            <p style="text-align: center;">
+              <strong>독립적인 문의처</strong>
+            </p>
 
-        <p>
-          The risks associated with this study are low. 
-          Your answers will be kept confidential. 
-          We have procedures to protect your privacy, and your identity will not be included in written materials resulting from the study.
-        </p>
+            <p>
+              연구의 진행 방식에 만족하지 못하거나, 연구 참여자로서의 권리에 대한 우려, 불만 혹은 일반적인 질문이 있는 경우,
+              연구진과 독립적인 담당자와 상담하기 위해 Stanford Institutional Review Board (IRB)에 
+              650-723-2480 또는 수신자 부담 전화 1-866-680-2906를 통해 연락하실 수 있습니다.
+              또한 irbnonmed@stanford.edu로 Stanford IRB에 이메일을 보낼 수 있습니다.
+            </p>
 
-         <p style="text-align: center;">
-          <strong>CONTACT INFORMATION</strong>
-        </p>
+            <p>
+              기록을 위해 이 페이지를 저장하거나 인쇄해 두시기 바랍니다.
+            </p>
 
-        <p>
-          <strong>Questions:</strong>
-          If you have any questions, concerns or complaints about this research, its procedures, risks and benefits, contact the Protocol Director,
-          Junseon Hong, junseonh@stanford.edu, 1-650-723-4284. 
-        </p>
+            <h3>
+              연구 참여에 동의하시는 경우, 아래의 “동의하고 계속 / Agree and Continue” 를 클릭해 주십시오.
+            </h3>
 
-        <p style="text-align: center;">
-          <strong>INDEPENDENT CONTACT</strong>
-        </p>
+          </div>
 
-        <p>
-          If you are not satisfied with how this study is being conducted, or if you have any concerns, complaints, 
-          or general questions about the research or your rights as a participant, contact the Stanford Institutional Review Board (IRB) 
-          to speak to someone independent of the research team at 650-723-2480 or toll free at 1-866-680-2906. 
-          You can also write to the Stanford IRB at irbnonmed@stanford.edu.
-        </p>
 
-        <p>
-          Please save or print a copy of this page for your records.
-        </p>
+          <!-- ENGLISH VERSION -->
+          <div id="consent-english" style="display: none;">
 
-        <h3>
-          If you agree to participate in this research,
-          please click “동의하고 계속 / Agree and Continue” below.
-        </h3>
+            <p>Protocol Director: Junseon Hong</p>
+            <p>Protocol Title: Behavioral Study of Language Comprehension and Interpretation</p>
+            <p>IRB# XXXXX</p>
 
-      </div>
+            <p style="text-align: center;">
+              <strong>FOR QUESTIONS ABOUT THE STUDY, CONTACT</strong>
+            </p>
+          
+            <p style="text-align: center;">
+              Junseon Hong, 450 Jane Stanford Way, Building 460, Rm. 127, STANFORD, CA, 1-650-723-4284
+            </p>
+            
+            <p style="text-align: center;">
+              <strong>DESCRIPTION</strong>
+            </p>
 
-    </div>
-  `,
+            <p>
+              You are invited to participate in a research study on language and communication.
+              The purpose of this research is to understand how people use and interpret sentences in different contexts.
+              You will be asked to read short contexts or view pictures and make judgments about sentences based on how you interpret them and what sounds natural to you.
+              Participation in this research is voluntary, and you are free to withdraw your consent at any time. 
+            </p>
 
-  choices: ["동의하고 계속 / Agree and Continue"],
+            <p style="text-align: center;">
+              <strong>TIME INVOLVEMENT</strong>
+            </p>
 
-  data: {
-    phase: "consent"
-  },
+            <p>
+              Your participation will take approximately 20 minutes.
+            </p>
 
-  on_load: function() {
+            <p style="text-align: center;">
+              <strong>PAYMENTS</strong>
+            </p>
 
-    const korean = document.getElementById("consent-korean");
-    const english = document.getElementById("consent-english");
+            <p>
+              You will receive 5,000 Korean Won as payment for your participation.
+            </p>
 
-    const koreanButton = document.getElementById("show-korean");
-    const englishButton = document.getElementById("show-english");
+            <p style="text-align: center;">
+              <strong>PRIVACY AND CONFIDENTIALITY</strong>
+            </p>
 
-    // Korean Ver.
-    koreanButton.addEventListener("click", function() {
-      korean.style.display = "block";
-      english.style.display = "none";
+            <p>
+              The risks associated with this study are low. 
+              Your answers will be kept confidential. 
+              We have procedures to protect your privacy, and your identity will not be included in written materials resulting from the study.
+            </p>
 
-      consent_language = "ko";
-    });
+            <p style="text-align: center;">
+              <strong>CONTACT INFORMATION</strong>
+            </p>
 
-    // English Ver.
-    englishButton.addEventListener("click", function() {
-      korean.style.display = "none";
-      english.style.display = "block";
+            <p>
+              <strong>Questions:</strong>
+              If you have any questions, concerns or complaints about this research, its procedures, risks and benefits, contact the Protocol Director,
+              Junseon Hong, junseonh@stanford.edu, 1-650-723-4284. 
+            </p>
 
-      consent_language = "en";
-    });
-  },
+            <p style="text-align: center;">
+              <strong>INDEPENDENT CONTACT</strong>
+            </p>
 
-  on_finish: function(data) {
-    data.consent_language = consent_language;
-  }
-};
+            <p>
+              If you are not satisfied with how this study is being conducted, or if you have any concerns, complaints, 
+              or general questions about the research or your rights as a participant, contact the Stanford Institutional Review Board (IRB) 
+              to speak to someone independent of the research team at 650-723-2480 or toll free at 1-866-680-2906. 
+              You can also write to the Stanford IRB at irbnonmed@stanford.edu.
+            </p>
 
-timeline.push(consent);
+            <p>
+              Please save or print a copy of this page for your records.
+            </p>
+
+            <h3>
+              If you agree to participate in this research,
+              please click “동의하고 계속 / Agree and Continue” below.
+            </h3>
+
+          </div>
+
+        </div>
+      `,
+
+      choices: ["동의하고 계속 / Agree and Continue"],
+
+      data: {
+        phase: "consent"
+      },
+
+      on_load: function() {
+
+        const korean = document.getElementById("consent-korean");
+        const english = document.getElementById("consent-english");
+
+        const koreanButton = document.getElementById("show-korean");
+        const englishButton = document.getElementById("show-english");
+
+        // Korean Ver.
+        koreanButton.addEventListener("click", function() {
+          korean.style.display = "block";
+          english.style.display = "none";
+
+          consent_language = "ko";
+        });
+
+        // English Ver.
+        englishButton.addEventListener("click", function() {
+          korean.style.display = "none";
+          english.style.display = "block";
+
+          consent_language = "en";
+        });
+      },
+
+      // on_finish: function(data) {
+      //   data.consent_language = consent_language;
+      // }
+    };
+
+    timeline.push(consent);
 
     // Instructions
     const instructions= {
       type: jsPsychInstructions,
+      record_data: false,
       pages: [`
         <div class="content">
           <h2>실험에 참여해주셔서 감사드립니다!</h2><br>
@@ -531,9 +523,8 @@ timeline.push(consent);
           </div>
         </div>
         `,
-     `
-        
-          <h3>예를 들어,</h3>
+      `
+        <h3>예를 들어,</h3>
         <div class="inst-box">
           <p style="font-size: 22px;font-weight: 500;">
             민수가 지수를 도와주었다.
@@ -557,6 +548,7 @@ timeline.push(consent);
 
     timeline.push({
     type: jsPsychHtmlButtonResponse,
+    record_data: false,
     stimulus: `
       <div class="begin-box">
         <p>준비가 되시면 아래의 버튼을 눌러 시작해주세요.</p> 
@@ -565,13 +557,15 @@ timeline.push(consent);
     `,
     choices: ["시작"],
     data: { phase: "begin_main" }
-  });
+    });
 
     //Run the experiment 
     function makeMeaningTrial(item) {
     return {
       type: jsPsychHtmlButtonResponse,
-
+      save_trial_parameters: {
+        stimulus: false
+      },
       stimulus: `
       <div class="trial-card">
 
@@ -588,55 +582,73 @@ timeline.push(consent);
 
       choices: response_buttons,
 
-      data: {
-        item_id: item.id,
-        item_type: item.trial_type,
-        sentence: item.sentence,
-        probe: item.probe,
-        // Add these variables only when they exist
-        ...(item.filler_type != null
-          ? { filler_type: item.filler_type }
-          : {}),
+data: {
+  // Put our desired columns first
+  subject_id: subject_id,
 
-        ...(item.qp_position != null
-          ? { qp_position: item.qp_position }
-          : {}),
+  list_number: list_number,
 
-        ...(item.negation_form != null
-          ? { negation_form: item.negation_form }
-          : {}),
+  item_id: item.id,
 
-        ...(item.probe_type != null
-          ? { probe_type: item.probe_type }
-          : {}),
+  item_type: item.trial_type,
 
-        ...(item.expected_response != null
-          ? { expected_response: item.expected_response }
-          : {})
-      },
+  filler_type:
+    item.filler_type ?? "",
 
-      on_finish: function(data) {
-        const selected_label = response_buttons[data.response];
+  qp_position:
+    item.qp_position ?? "",
 
-        data.response_label = selected_label;
-        data.response_binary = selected_label === "예" ? "yes" : "no";
+  negation_form:
+    item.negation_form ?? "",
 
-         // correct answer - fillers and attention checks
-        if (data.expected_response !== undefined) {
+  probe_type:
+    item.probe_type ?? "",
 
-        data.correct =
-          data.response_binary === data.expected_response;
-        }
+  sentence:
+    item.sentence,
 
-        // Remove jsPsych fields that are not needed
-        delete data.rt;
-        delete data.stimulus;
-        delete data.response;
-        delete data.trial_type;
-        delete data.trial_index;
-        delete data.plugin_version;
-        delete data.time_elapsed;
-        }
+  probe:
+    item.probe,
+
+  yes_no_order:
+    response_buttons.join("|"),
+
+  expected_response:
+    item.expected_response ?? "",
+
+  // Create these columns now so they appear
+  // with the other variables above
+  response_label: "",
+
+  response_binary: "",
+
+  correct: ""
+  },
+
+
+  on_finish: function(data) {
+
+  const selected_label =
+    response_buttons[data.response];
+
+  data.response_label =
+    selected_label;
+
+  data.response_binary =
+    selected_label === "예"
+      ? "yes"
+      : "no";
+
+
+  if (data.expected_response !== "") {
+
+    data.correct =
+      data.response_binary ===
+      data.expected_response;
+
+  }
+
+  }
     };
   }
 
@@ -941,93 +953,19 @@ timeline.push(consent);
       );
     });
 
+
+// Saving data 
 const filename = `${subject_id}_exp1.csv`;
 
-const columns = [
-  "subject_id",
-  "list_number",
-  "item_id",
-  "item_type",
-  "filler_type",
-  "qp_position",
-  "negation_form",
-  "probe_type",
-  "sentence",
-  "probe",
-  "yes_no_order",
-  "expected_response",
-  "response_label",
-  "response_binary",
-  "correct"
-];
-
-timeline.push({
-
+const save_data = {
   type: jsPsychPipe,
-
   action: "save",
-
   experiment_id: "DpvkvDr9rv2q",
-
   filename: filename,
+  data_string: ()=>"\uFEFF" + jsPsych.data.get().csv()
+};
 
-  data_string: () => {
-
-    return jsPsych.data
-      .get()
-
-      // Keep only actual experimental trials
-      .filter([
-        { item_type: "target" },
-        { item_type: "filler" },
-        { item_type: "attention" }
-      ])
-
-      // Keep only the columns we want
-      .filterColumns(columns)
-
-      // Convert to CSV
-      .csv();
-  }
-
-});
-
-// // ============================================================
-// // SAVE TO DATAPIPE
-// // ============================================================
-
-// timeline.push({
-// type: jsPsychPipe,
-// action: "save",
-// experiment_id:
-//   "DpvkvDr9rv2q",
-// filename:
-//   filename,
-// data_string: () => {
-// const relevant_data =
-//   jsPsych.data
-//     .get()
-//     .filterCustom(data =>
-//       data.item_type === "target"
-//       ||
-//       data.item_type === "filler"
-//       ||
-//       data.item_type === "attention"
-//     );
-//   return relevant_data.csv();
-// }
-// });
-
-// const save_data = {
-//   type: jsPsychPipe,
-//   action: "save",
-//   experiment_id: "DpvkvDr9rv2q",
-//   filename: filename,
-//   data_string: ()=>jsPsych.data.get().csv()
-// };
-
-// timeline.push(save_data)
-
+timeline.push(save_data)
 
 // ============================================================
 // COMPLETION SCREEN
