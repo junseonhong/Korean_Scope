@@ -514,7 +514,7 @@
       record_data: false,
       pages: [`
         <div class="content">
-          <h2>실험에 참여해주셔서 감사드립니다!</h2><br>
+          <h2>실험에 참여해주셔서 감사합니다!</h2><br>
           <div class="inst-box">
           <p>이 실험에서는 두개의 문장을 읽게 됩니다.</p>
           <p>두 문장을 순서대로 읽었을 때, 의미가 자연스럽게 이해되는지 판단해 주세요.</p>
@@ -580,427 +580,381 @@
       </div>
     `,
 
-      choices: response_buttons,
+    choices: response_buttons,
+    data: {
+      subject_id: subject_id,
+      list_number: list_number,
+      item_id: item.id,
+      item_type: item.trial_type,
+      filler_type:
+        item.filler_type ?? "",
+      qp_position:
+        item.qp_position ?? "",
+      negation_form:
+        item.negation_form ?? "",
+      probe_type:
+        item.probe_type ?? "",
+      sentence:
+        item.sentence,
+      probe:
+        item.probe,
+      yes_no_order:
+        response_buttons.join("|"),
+      expected_response:
+        item.expected_response ?? "",
+      response_label: "",
+      response_binary: "",
+      correct: ""
+      },
 
-data: {
-  // Put our desired columns first
-  subject_id: subject_id,
-
-  list_number: list_number,
-
-  item_id: item.id,
-
-  item_type: item.trial_type,
-
-  filler_type:
-    item.filler_type ?? "",
-
-  qp_position:
-    item.qp_position ?? "",
-
-  negation_form:
-    item.negation_form ?? "",
-
-  probe_type:
-    item.probe_type ?? "",
-
-  sentence:
-    item.sentence,
-
-  probe:
-    item.probe,
-
-  yes_no_order:
-    response_buttons.join("|"),
-
-  expected_response:
-    item.expected_response ?? "",
-
-  // Create these columns now so they appear
-  // with the other variables above
-  response_label: "",
-
-  response_binary: "",
-
-  correct: ""
-  },
-
-
-  on_finish: function(data) {
-
-  const selected_label =
-    response_buttons[data.response];
-
-  data.response_label =
-    selected_label;
-
-  data.response_binary =
-    selected_label === "예"
-      ? "yes"
-      : "no";
-
-
-  if (data.expected_response !== "") {
-
-    data.correct =
-      data.response_binary ===
-      data.expected_response;
-
-  }
-
-  }
-    };
-  }
-
-  const experimental_conditions = [
-    { qp_position: "object",  negation_form: "LFN", probe_type: "surface" },
-    { qp_position: "object",  negation_form: "LFN", probe_type: "inverse" },
-    { qp_position: "object",  negation_form: "SFN", probe_type: "surface" },
-    { qp_position: "object",  negation_form: "SFN", probe_type: "inverse" },
-    { qp_position: "subject", negation_form: "LFN", probe_type: "surface" },
-    { qp_position: "subject", negation_form: "LFN", probe_type: "inverse" },
-    { qp_position: "subject", negation_form: "SFN", probe_type: "surface" },
-    { qp_position: "subject", negation_form: "SFN", probe_type: "inverse" }
-  ];
-
-  // CHECK - loading stimulus file
-  if (
-    !Array.isArray(window.EXP1_STIMULI) ||
-    !Array.isArray(window.EXP1_FILLERS) ||
-    !Array.isArray(window.EXP1_ATTENTION)
-  ) {
-    timeline.push({
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: `
-        <div class="error-box">
-          <h2>Stimulus file not loaded</h2>
-
-          <p>
-            <code>stims.js</code> must define:
-          </p>
-
-          <p>
-            <code>window.EXP1_STIMULI</code><br>
-            <code>window.EXP1_FILLERS</code><br>
-            <code>window.EXP1_ATTENTION</code>
-          </p>
-        </div>
-      `,
-      choices: "NO_KEYS"
-    });
-  } else {
-
-  // 1. Select 32 targets:
-  // Each participant sees: 32 targets
-  // 4 OBJ LFN surface
-  // 4 OBJ LFN inverse
-  // 4 OBJ SFN surface
-  // 4 OBJ SFN inverse
-  // 4 SUBJ LFN surface
-  // 4 SUBJ LFN inverse
-  // 4 SUBJ SFN surface
-  // 4 SUBJ SFN inverse
-
-  const selected_targets = window.EXP1_STIMULI.filter(stim => {
-
-  // Items 1–8 start in the 8 different conditions. Items 9–16 repeat that pattern,....
-  const base_condition = (stim.item - 1) % 8;
-
-  // Move the item to the next condition on each experimental list.
-  const condition_index =
-    (base_condition + (list_number - 1)) % 8;
-  const required_condition =
-    experimental_conditions[condition_index];
-  return (
-    stim.qp_position === required_condition.qp_position &&
-    stim.negation_form === required_condition.negation_form &&
-    stim.probe_type === required_condition.probe_type
-  );
-  });
-
-  // 2. Select balanced fillers: 16 fillers
-  // 4 F1
-  // 4 F2
-  // 4 F3
-  // 4 F4
-  // Within every filler family: 2 TRUE probes & 2 FALSE probes
-  // F1 additionally contains: subject LFN, subject SFN, object LFN, object SFN
-  // F2–F4: 2 subject & 2 object
-  
-  // Helper: find one exact filler
-  function findFiller(
-    filler_type,
-    item_number,
-    position,
-    negation_form,
-    probe_type
-  ) {
-    return window.EXP1_FILLERS.find(filler => {
-      return (
-        filler.filler_type === filler_type
-        &&
-        filler.item === item_number
-        &&
-        filler.qp_position === position
-        &&
-        filler.negation_form === negation_form
-        &&
-        filler.probe_type === probe_type
-      );
-    });
-  }
-
-  // F1
-  // One item from each structural condition: Probe polarity alternates across slots & Lexical set is used rotates across lists
-  const f1_slots = [
-    {
-      position: "subject",
-      negation: "LFN"
-    },
-    {
-      position: "subject",
-      negation: "SFN"
-    },
-    {
-      position: "object",
-      negation: "LFN"
-    },
-    {
-      position: "object",
-      negation: "SFN"
-    }
-  ];
-
-  const selected_F1 =
-    f1_slots.map((slot, index) => {
-      // Rotate lexical sets 1–6 across experimental lists
-      const item_number =
-        ((list_number - 1 + index) % 6) + 1;
-      // Exactly 2 true + 2 false
-      const probe_type =
-        (index + list_number) % 2 === 0
-          ? "true"
-          : "false";
-      return findFiller(
-        "F1",
-        item_number,
-        slot.position,
-        slot.negation,
-        probe_type
-      );
-    });
-
-  // F2, F3, F4
-  // For each family:
-  // 2 subject
-  // 2 object
-  // 2 true
-  // 2 false
-
-  function selectFourFromFillerFamily(filler_type) {
-    const positions = [
-      "subject",
-      "subject",
-      "object",
-      "object"
-    ];
-    return positions.map((position, index) => {
-      // Rotate lexical sets 1–6 across lists
-      const item_number =
-        ((list_number - 1 + index) % 6) + 1;
-      // Exactly 2 true and 2 false
-      const probe_type =
-        (index + list_number) % 2 === 0
-          ? "true"
-          : "false";
-      return findFiller(
-        filler_type,
-        item_number,
-        position,
-        null,
-        probe_type
-      );
-    });
+      on_finish: function(data) {
+        const selected_label =
+          response_buttons[data.response];
+        data.response_label =
+          selected_label;
+        data.response_binary =
+          selected_label === "예"
+            ? "yes"
+            : "no";
+        if (data.expected_response !== "") {
+          data.correct =
+            data.response_binary ===
+            data.expected_response;
+          }
+        }
+      };
     }
 
-    const selected_F2 =
-      selectFourFromFillerFamily("F2");
-
-    const selected_F3 =
-      selectFourFromFillerFamily("F3");
-
-    const selected_F4 =
-      selectFourFromFillerFamily("F4");
-
-    const selected_fillers = [
-      ...selected_F1,
-      ...selected_F2,
-      ...selected_F3,
-      ...selected_F4
+    const experimental_conditions = [
+      { qp_position: "object",  negation_form: "LFN", probe_type: "surface" },
+      { qp_position: "object",  negation_form: "LFN", probe_type: "inverse" },
+      { qp_position: "object",  negation_form: "SFN", probe_type: "surface" },
+      { qp_position: "object",  negation_form: "SFN", probe_type: "inverse" },
+      { qp_position: "subject", negation_form: "LFN", probe_type: "surface" },
+      { qp_position: "subject", negation_form: "LFN", probe_type: "inverse" },
+      { qp_position: "subject", negation_form: "SFN", probe_type: "surface" },
+      { qp_position: "subject", negation_form: "SFN", probe_type: "inverse" }
     ];
 
-  // 3. Select 4 attention checks: 2 expected YES & 2 expected NO
-  // Prevent the same base attention item from occurring twice.
-  const attention_true =
-    window.EXP1_ATTENTION.filter(
-      item => item.expected_response === "yes"
-    );
-  const attention_false =
-    window.EXP1_ATTENTION.filter(
-      item => item.expected_response === "no"
-    );
+    // CHECK - loading stimulus file
+    if (
+      !Array.isArray(window.EXP1_STIMULI) ||
+      !Array.isArray(window.EXP1_FILLERS) ||
+      !Array.isArray(window.EXP1_ATTENTION)
+    ) {
+      timeline.push({
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `
+          <div class="error-box">
+            <h2>Stimulus file not loaded</h2>
 
-  // Randomly choose 2 YES attention checks
-  const selected_attention_true =
-    jsPsych.randomization.sampleWithoutReplacement(
-      attention_true,
-      2
-    );
+            <p>
+              <code>stims.js</code> must define:
+            </p>
 
-  // Avoid selecting another version of the same base item
-  const used_attention_items =
-    selected_attention_true.map(
-      item => item.item
-    );
+            <p>
+              <code>window.EXP1_STIMULI</code><br>
+              <code>window.EXP1_FILLERS</code><br>
+              <code>window.EXP1_ATTENTION</code>
+            </p>
+          </div>
+        `,
+        choices: "NO_KEYS"
+      });
+    } else {
 
-  const available_attention_false =
-    attention_false.filter(
-      item =>
-        !used_attention_items.includes(item.item)
-    );
+    // 1. Select 32 targets:
+    // Each participant sees 32 target: 4 OBJ LFN surface, 4 OBJ LFN inverse, 4 OBJ SFN surface, 4 OBJ SFN inverse, 4 SUBJ LFN surface, 4 SUBJ LFN inverse, 4 SUBJ SFN surface, 4 SUBJ SFN inverse
 
-  // Randomly choose 2 NO attention checks
-  const selected_attention_false =
-    jsPsych.randomization.sampleWithoutReplacement(
-      available_attention_false,
-      2
-    );
-  const selected_attention = [
+    const selected_targets = window.EXP1_STIMULI.filter(stim => {
 
-    ...selected_attention_true,
-    ...selected_attention_false
+    // Items 1–8 start in the 8 different conditions. Items 9–16 repeat that pattern,....
+    const base_condition = (stim.item - 1) % 8;
 
-  ];
-  
-  //Combine trials with constrained randomization (32 targets, 16 fillers, 4 attention checks)
-  // Every filler/attention trial is separated from the next
-  // filler/attention trial by at least one target.
-  
-  // Randomize targets
-  const randomized_targets =
-    jsPsych.randomization.shuffle(
-      selected_targets
-    );
-
-  // Combine fillers + attention checks
-  const non_targets = [
-    ...selected_fillers,
-    ...selected_attention
-  ];
-
-  // Randomize fillers + attention checks
-  const randomized_non_targets =
-    jsPsych.randomization.shuffle(
-      non_targets
-    );
-
-  // 33 possible gaps around 32 targets: Put each non-target into a different gap.
-  // Guarantees that two non-target trials can never appear consecutively.
-  const possible_gaps =
-    Array.from(
-      { length: randomized_targets.length + 1 },
-      (_, index) => index
-    );
-
-  const selected_gaps =
-    jsPsych.randomization.sampleWithoutReplacement(
-      possible_gaps,
-      randomized_non_targets.length
-    );
-
-  // Associate one non-target trial with each selected gap
-  const gap_trials = {};
-  selected_gaps.forEach((gap, index) => {
-    gap_trials[gap] =
-      randomized_non_targets[index];
-  });
-  // Build the final trial sequence
-    const randomized_trials = [];
-    for (
-      let i = 0;
-      i <= randomized_targets.length;
-      i++
-    ) 
-    {
-    // Add a filler/attention check if this gap was selected
-    if (gap_trials[i] !== undefined) {
-      randomized_trials.push(
-        gap_trials[i]
-      );
-    }
-    // Then add the next target
-    if (i < randomized_targets.length) {
-      randomized_trials.push(
-        randomized_targets[i]
-      );
-    }
-    }
-
-    // Add all 52 trials to timeline
-    randomized_trials.forEach(item => {
-      timeline.push( 
-        makeMeaningTrial(item)
+    // Move the item to the next condition on each experimental list.
+    const condition_index =
+      (base_condition + (list_number - 1)) % 8;
+    const required_condition =
+      experimental_conditions[condition_index];
+    return (
+      stim.qp_position === required_condition.qp_position &&
+      stim.negation_form === required_condition.negation_form &&
+      stim.probe_type === required_condition.probe_type
       );
     });
 
+    // 2. Select balanced 16 fillers: 4 F1, 4 F2, 4 F3, 4 F4
+    // Within every filler family: 2 TRUE probes & 2 FALSE probes
+    // F1 additionally contains: subject LFN, subject SFN, object LFN, object SFN
+    // F2–F4: 2 subject & 2 object
+    
+    // Helper: find one exact filler
+    function findFiller(
+      filler_type,
+      item_number,
+      position,
+      negation_form,
+      probe_type
+    ) {
+      return window.EXP1_FILLERS.find(filler => {
+        return (
+          filler.filler_type === filler_type
+          &&
+          filler.item === item_number
+          &&
+          filler.qp_position === position
+          &&
+          filler.negation_form === negation_form
+          &&
+          filler.probe_type === probe_type
+        );
+      });
+    } 
 
-// Saving data 
-const filename = `${subject_id}_exp1.csv`;
+    // F1
+    // One item from each structural condition: Probe polarity alternates across slots & Lexical set is used rotates across lists
+    const f1_slots = [
+      {
+        position: "subject",
+        negation: "LFN"
+      },
+      {
+        position: "subject",
+        negation: "SFN"
+      },
+      {
+        position: "object",
+        negation: "LFN"
+      },
+      {
+        position: "object",
+        negation: "SFN"
+      }
+    ];
 
-const save_data = {
-  type: jsPsychPipe,
-  action: "save",
-  experiment_id: "DpvkvDr9rv2q",
-  filename: filename,
-  data_string: ()=>"\uFEFF" + jsPsych.data.get().csv()
-};
+    const selected_F1 =
+      f1_slots.map((slot, index) => {
+        // Rotate lexical sets 1–6 across experimental lists
+        const item_number =
+          ((list_number - 1 + index) % 6) + 1;
+        // Exactly 2 true + 2 false
+        const probe_type =
+          (index + list_number) % 2 === 0
+            ? "true"
+            : "false";
+        return findFiller(
+          "F1",
+          item_number,
+          slot.position,
+          slot.negation,
+          probe_type
+        );
+      });
 
-timeline.push(save_data)
+    // F2, F3, F4
+    // For each family: 2 subject, 2 object & 2 true, 2 false
 
-// ============================================================
-// COMPLETION SCREEN
-// ============================================================
+    function selectFourFromFillerFamily(filler_type) {
+      const positions = [
+        "subject",
+        "subject",
+        "object",
+        "object"
+      ];
+      return positions.map((position, index) => {
+        // Rotate lexical sets 1–6 across lists
+        const item_number =
+          ((list_number - 1 + index) % 6) + 1;
+        // Exactly 2 true and 2 false
+        const probe_type =
+          (index + list_number) % 2 === 0
+            ? "true"
+            : "false";
+        return findFiller(
+          filler_type,
+          item_number,
+          position,
+          null,
+          probe_type
+        );
+      });
+      }
 
-timeline.push({
+      const selected_F2 =
+        selectFourFromFillerFamily("F2");
 
-type: jsPsychHtmlKeyboardResponse,
+      const selected_F3 =
+        selectFourFromFillerFamily("F3");
 
-stimulus: `
-  <div class="completion-box">
+      const selected_F4 =
+        selectFourFromFillerFamily("F4");
 
-    <h2>
-      실험이 끝났습니다.
-    </h2>
+      const selected_fillers = [
+        ...selected_F1,
+        ...selected_F2,
+        ...selected_F3,
+        ...selected_F4
+      ];
 
-    <p>
-      참여해 주셔서 감사합니다.
-    </p>
+    // 3. Select 4 attention checks: 2 expected YES & 2 expected NO
+    // Prevent the same base attention item from occurring twice.
+    const attention_true =
+      window.EXP1_ATTENTION.filter(
+        item => item.expected_response === "yes"
+      );
+    const attention_false =
+      window.EXP1_ATTENTION.filter(
+        item => item.expected_response === "no"
+      );
 
-    <p>
-      응답이 저장되었습니다.
-      이제 이 창을 닫으셔도 됩니다.
-    </p>
+    // Randomly choose 2 YES attention checks
+    const selected_attention_true =
+      jsPsych.randomization.sampleWithoutReplacement(
+        attention_true,
+        2
+      );
 
-  </div>
-`,
+    // Avoid selecting another version of the same base item
+    const used_attention_items =
+      selected_attention_true.map(
+        item => item.item
+      );
 
-choices: "NO_KEYS",
+    const available_attention_false =
+      attention_false.filter(
+        item =>
+          !used_attention_items.includes(item.item)
+      );
 
-data: {
-  phase: "completion"
-}
+    // Randomly choose 2 NO attention checks
+    const selected_attention_false =
+      jsPsych.randomization.sampleWithoutReplacement(
+        available_attention_false,
+        2
+      );
+    const selected_attention = [
 
-});
+      ...selected_attention_true,
+      ...selected_attention_false
+
+    ];
+  
+    //Combine trials with constrained randomization (32 targets, 16 fillers, 4 attention checks)
+    // Every filler/attention trial is separated from the next
+    // filler/attention trial by at least one target.
+    
+    // Randomize targets
+    const randomized_targets =
+      jsPsych.randomization.shuffle(
+        selected_targets
+      );
+
+    // Combine fillers + attention checks
+    const non_targets = [
+      ...selected_fillers,
+      ...selected_attention
+    ];
+
+    // Randomize fillers + attention checks
+    const randomized_non_targets =
+      jsPsych.randomization.shuffle(
+        non_targets
+      );
+
+    // 33 possible gaps around 32 targets: Put each non-target into a different gap.
+    // Guarantees that two non-target trials can never appear consecutively.
+    const possible_gaps =
+      Array.from(
+        { length: randomized_targets.length + 1 },
+        (_, index) => index
+      );
+
+    const selected_gaps =
+      jsPsych.randomization.sampleWithoutReplacement(
+        possible_gaps,
+        randomized_non_targets.length
+      );
+
+    // Associate one non-target trial with each selected gap
+    const gap_trials = {};
+    selected_gaps.forEach((gap, index) => {
+      gap_trials[gap] =
+        randomized_non_targets[index];
+    });
+    // Build the final trial sequence
+      const randomized_trials = [];
+      for (
+        let i = 0;
+        i <= randomized_targets.length;
+        i++
+      ) 
+      {
+      // Add a filler/attention check if this gap was selected
+      if (gap_trials[i] !== undefined) {
+        randomized_trials.push(
+          gap_trials[i]
+        );
+      }
+      // Then add the next target
+      if (i < randomized_targets.length) {
+        randomized_trials.push(
+          randomized_targets[i]
+        );
+      }
+      }
+
+      // Add all 52 trials to timeline
+      randomized_trials.forEach(item => {
+        timeline.push( 
+          makeMeaningTrial(item)
+        );
+      });
+
+
+  // Saving data 
+  const filename = `exp1_${subject_id}.csv`;
+
+  const save_data = {
+    type: jsPsychPipe,
+    action: "save",
+    experiment_id: "DpvkvDr9rv2q",
+    filename: filename,
+    data_string: ()=>"\uFEFF" + jsPsych.data.get().csv(),
+    wait_message: `
+      <p>응답을 저장하고 있습니다.</p>
+      <p>페이지를 닫지 마세요.</p>
+    `
+  };
+
+  timeline.push(save_data)
+
+  // COMPLETION SCREEN
+
+  timeline.push({
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: `
+    <div class="completion-box">
+
+      <h2>
+        실험이 끝났습니다.
+      </h2>
+
+      <p>
+        참여해 주셔서 감사합니다.
+      </p>
+
+      <p>
+        응답이 저장되었습니다.
+        이제 이 창을 닫으셔도 됩니다.
+      </p>
+
+    </div>
+  `,
+  choices: "NO_KEYS",
+  data: {
+    phase: "completion"
+    }
+  });
   }
 
   jsPsych.run(timeline);
