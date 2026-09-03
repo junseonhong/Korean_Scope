@@ -943,25 +943,6 @@ timeline.push(consent);
 
 const filename = `${subject_id}_exp1.csv`;
 
-// ============================================================
-// BUILD CSV
-// ============================================================
-
-function buildExperimentCSV() {
-
-const relevant_data =
-  jsPsych.data
-    .get()
-    .filterCustom(data =>
-      data.item_type === "target"
-      ||
-      data.item_type === "filler"
-      ||
-      data.item_type === "attention"
-    );
-
-
-// Exact CSV column order
 const columns = [
   "subject_id",
   "list_number",
@@ -980,85 +961,62 @@ const columns = [
   "correct"
 ];
 
-
-function escapeCSV(value) {
-
-  if (
-    value === undefined
-    ||
-    value === null
-  ) {
-    return "";
-  }
-
-  const stringValue =
-    String(value);
-
-  return `"${stringValue.replace(
-    /"/g,
-    '""'
-  )}"`;
-}
-
-
-const rows =
-  relevant_data.values();
-
-
-const header =
-  columns.join(",");
-
-
-const body =
-  rows
-    .map(row =>
-      columns
-        .map(column =>
-          escapeCSV(
-            row[column]
-          )
-        )
-        .join(",")
-    )
-    .join("\n");
-
-
-// UTF-8 BOM + CSV
-return "\uFEFF" + header + "\n" + body;
-}
-
-// ============================================================
-// SAVE TO DATAPIPE
-// ============================================================
-
 timeline.push({
 
-type: jsPsychPipe,
+  type: jsPsychPipe,
 
-action: "save",
+  action: "save",
 
-experiment_id:
-  "DpvkvDr9rv2q",
+  experiment_id: "DpvkvDr9rv2q",
 
-filename:
-  filename,
+  filename: filename,
 
   data_string: () => {
-  const relevant_data =
-    jsPsych.data
-      .get()
-      .filterCustom(data =>
-        data.item_type === "target"
-        ||
-        data.item_type === "filler"
-        ||
-        data.item_type === "attention"
-      );
 
-  return relevant_data.csv();
-}
+    return jsPsych.data
+      .get()
+
+      // Keep only actual experimental trials
+      .filter([
+        { item_type: "target" },
+        { item_type: "filler" },
+        { item_type: "attention" }
+      ])
+
+      // Keep only the columns we want
+      .filterColumns(columns)
+
+      // Convert to CSV
+      .csv();
+  }
 
 });
+
+// // ============================================================
+// // SAVE TO DATAPIPE
+// // ============================================================
+
+// timeline.push({
+// type: jsPsychPipe,
+// action: "save",
+// experiment_id:
+//   "DpvkvDr9rv2q",
+// filename:
+//   filename,
+// data_string: () => {
+// const relevant_data =
+//   jsPsych.data
+//     .get()
+//     .filterCustom(data =>
+//       data.item_type === "target"
+//       ||
+//       data.item_type === "filler"
+//       ||
+//       data.item_type === "attention"
+//     );
+//   return relevant_data.csv();
+// }
+// });
 
 // const save_data = {
 //   type: jsPsychPipe,
