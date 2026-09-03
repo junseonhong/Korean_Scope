@@ -254,7 +254,7 @@
       // }
     });
 
-    const DATAPIPE_EXPERIMENT_ID = "REPLACE_WITH_EXP1_ID";
+    const DATAPIPE_EXPERIMENT_ID = "DpvkvDr9rv2q";
 
     const subject_id = jsPsych.randomization.randomID(10);
 
@@ -942,112 +942,149 @@ timeline.push(consent);
 
     const filename = `${subject_id}_exp1.csv`;
 
-    if (DATAPIPE_EXPERIMENT_ID === "REPLACE_WITH_EXP1_ID") {
+if (DATAPIPE_EXPERIMENT_ID === "REPLACE_WITH_EXP1_ID") {
 
-    // Show only the main experimental data
-    timeline.push({
+// ============================================================
+// BUILD CSV
+// ============================================================
 
-    type: jsPsychHtmlKeyboardResponse,
+function buildExperimentCSV() {
 
-  stimulus: function() {
+const relevant_data =
+  jsPsych.data
+    .get()
+    .filterCustom(data =>
+      data.item_type === "target"
+      ||
+      data.item_type === "filler"
+      ||
+      data.item_type === "attention"
+    );
 
-  // Only show targets, fillers, and attention checks
-  const experiment_data =
-    jsPsych.data
-      .get()
-      .values()
-      .filter(data =>
-        data.item_type === "target"
-        ||
-        data.item_type === "filler"
-        ||
-        data.item_type === "attention"
-      );
 
-  return `
-    <div
-      style="
-        text-align:left;
-        max-width:1000px;
-        margin:auto;
-      "
-    >
+// Exact CSV column order
+const columns = [
+  "subject_id",
+  "list_number",
+  "item_id",
+  "item_type",
+  "filler_type",
+  "qp_position",
+  "negation_form",
+  "probe_type",
+  "sentence",
+  "probe",
+  "yes_no_order",
+  "expected_response",
+  "response_label",
+  "response_binary",
+  "correct"
+];
 
-      <h2>
-        Collected experimental data
-      </h2>
 
-      <pre
-        style="
-          white-space:pre-wrap;
-          background:#f8fafc;
-          padding:20px;
-          border-radius:10px;
-          font-size:14px;
-          overflow:auto;
-        "
-      >${JSON.stringify(
-        experiment_data,
-        null,
-        2
-      )}</pre>
+function escapeCSV(value) {
 
-    </div>
-  `;
-},
+  if (
+    value === undefined
+    ||
+    value === null
+  ) {
+    return "";
+  }
 
-choices: "NO_KEYS"
+  const stringValue =
+    String(value);
+
+  return `"${stringValue.replace(
+    /"/g,
+    '""'
+  )}"`;
+}
+
+
+const rows =
+  relevant_data.values();
+
+
+const header =
+  columns.join(",");
+
+
+const body =
+  rows
+    .map(row =>
+      columns
+        .map(column =>
+          escapeCSV(
+            row[column]
+          )
+        )
+        .join(",")
+    )
+    .join("\n");
+
+
+// UTF-8 BOM + CSV
+return "\uFEFF" + header + "\n" + body;
+}
+
+
+// ============================================================
+// SAVE TO DATAPIPE
+// ============================================================
+
+timeline.push({
+
+type: jsPsychPipe,
+
+action: "save",
+
+experiment_id:
+  DATAPIPE_EXPERIMENT_ID,
+
+filename:
+  filename,
+
+data_string: () =>
+  buildExperimentCSV()
+
 });
 
-} else {
+
+// ============================================================
+// COMPLETION SCREEN
+// ============================================================
+
 timeline.push({
-  type: jsPsychPipe,
-  action: "save",
-  experiment_id:
-    DATAPIPE_EXPERIMENT_ID,
-  filename: filename,
 
-  data_string: () => {
-    const relevant_data =
-      jsPsych.data
-        .get()
-        .filterCustom(data =>
-          data.item_type === "target"
-          ||
-          data.item_type === "filler"
-          ||
-          data.item_type === "attention"
-        );
-    return relevant_data.csv();
-  }
-  });
+type: jsPsychHtmlKeyboardResponse,
 
-  // End-of-experiment screen
-  timeline.push({
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `
-      <div class="saving-box">
-        <h2>Local test mode</h2>
-        <p>실험이 끝났습니다.</p>
-        <p>아래 버튼을 눌러 수집된 데이터를 확인해 주세요.</p>
-      </div>
-    `,
-    choices: ["데이터 확인"],
-    data: { phase: "local_test" }
-  });
+stimulus: `
+  <div class="completion-box">
 
-  timeline.push({
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus: `
-      <div class="completion-box">
-        <h2>실험이 끝났습니다.</h2>
-        <p>참여해 주셔서 감사합니다.</p>
-        <p>응답이 저장되었습니다. 이제 이 창을 닫으셔도 됩니다.</p>
-      </div>
-    `,
-    choices: "NO_KEYS",
-    data: { phase: "completion" }
-  });
+    <h2>
+      실험이 끝났습니다.
+    </h2>
+
+    <p>
+      참여해 주셔서 감사합니다.
+    </p>
+
+    <p>
+      응답이 저장되었습니다.
+      이제 이 창을 닫으셔도 됩니다.
+    </p>
+
+  </div>
+`,
+
+choices: "NO_KEYS",
+
+data: {
+  phase: "completion"
+}
+
+});
   }
   }
 
