@@ -1024,9 +1024,8 @@ const body =
 
 
 // UTF-8 BOM + CSV
-return "\uFEFF" + header + "\n" + body;
+return header + "\n" + body;
 }
-
 
 // ============================================================
 // SAVE TO DATAPIPE
