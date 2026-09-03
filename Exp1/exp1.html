@@ -9,6 +9,7 @@
   <script src="https://unpkg.com/@jspsych/plugin-instructions@2.1.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@2.1.0"></script>
   <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
   <script src="stims.js"></script>
   
@@ -240,7 +241,11 @@
 
   /* subtle shaded effect */
   box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.45);
-}
+  }
+  #jspsych-survey-html-form-next {
+    display: block;
+    margin: 30px auto 0 auto;
+  }
   </style>
 
 </head>
@@ -248,7 +253,8 @@
   <script>
     // Initialize jsPsych
     const jsPsych = initJsPsych({
-     show_progress_bar: true,
+      show_progress_bar: true,
+      message_progress_bar: ""
     });
 
     const DATAPIPE_EXPERIMENT_ID = "DpvkvDr9rv2q";
@@ -273,7 +279,7 @@
 
     // Consent language shown by default
     let consent_language = "ko";
-
+    
     // Consent
     const consent = {
       type: jsPsychHtmlButtonResponse,
@@ -488,7 +494,6 @@
         koreanButton.addEventListener("click", function() {
           korean.style.display = "block";
           english.style.display = "none";
-
           consent_language = "ko";
         });
 
@@ -496,7 +501,6 @@
         englishButton.addEventListener("click", function() {
           korean.style.display = "none";
           english.style.display = "block";
-
           consent_language = "en";
         });
       },
@@ -507,6 +511,110 @@
     };
 
     timeline.push(consent);
+
+    //Eligibity
+
+    const eligibility_check = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: `
+        <div style="max-width:700px; margin:auto; text-align:center;">
+          <h3>
+            연구에 관심을 가져주셔서 감사합니다.
+          </h3>
+          <h3>
+            본 연구에는 만 18세 이상의 한국어 화자만 참여하실 수 있습니다.
+          </h3>
+        </div>
+      `,
+      html: `
+        <div style="max-width:700px; margin:auto;">
+
+          <div style="margin:30px 0;">
+            <p style="text-align:center;">
+              <strong>1. 만 18세 이상이신가요?</strong>
+            </p>
+
+            <div style="text-align:center;">
+              <label style="margin-right:25px;">
+                <input
+                  type="radio"
+                  name="age_18"
+                  value="yes"
+                  required
+                >
+                예
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name="age_18"
+                  value="no"
+                >
+                아니요
+              </label>
+            </div>
+          </div>
+
+          <div style="margin:30px 0;">
+            <p style="text-align:center;">
+              <strong>2. 한국어가 어린 시절부터 습득한 언어이며, 현재 주 사용 언어인가요?</strong>
+            </p>
+
+            <div style="text-align:center;">
+              <label style="margin-right:25px;">
+                <input
+                  type="radio"
+                  name="native_korean"
+                  value="yes"
+                  required
+                >
+                예
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name="native_korean"
+                  value="no"
+                >
+                아니요
+              </label>
+            </div>
+          </div>
+
+        </div>
+      `,
+
+      button_label: "계속",
+
+      data: {
+        phase: "eligibility"
+      },
+
+      on_finish: function(data) {
+
+        if (
+          data.response.age_18 !== "yes" ||
+          data.response.native_korean !== "yes"
+        ) {
+
+          jsPsych.abortExperiment(`
+            <div class="completion-box">
+              <p>
+                죄송하지만 본 연구의 참여 조건에 해당하지 않습니다.
+              </p>
+
+              <p>
+                관심을 가져주셔서 감사합니다.
+              </p>
+            </div>
+          `);
+
+        }
+      }
+    };
+    timeline.push(eligibility_check);
 
     // Instructions
     const instructions= {
@@ -532,10 +640,10 @@
           </p>
         </div>
         
-          <p style="margin-top:28px;">
-            <h3>이 경우 두 번째 문장은 첫 번째 문장을 자연스럽게 다시 말한 것이므로
-            <strong>“예”</strong>를 선택합니다.</h3>
-          </p>
+        <p style="margin-top:28px;">
+          <h3>이 경우 두 번째 문장은 첫 번째 문장을 자연스럽게 다시 말한 것이므로
+          <strong>“예”</strong>를 선택합니다.</h3>
+        </p>
         `
       ],
       show_clickable_nav: true,
@@ -551,8 +659,8 @@
     record_data: false,
     stimulus: `
       <div class="begin-box">
-        <p>준비가 되시면 아래의 버튼을 눌러 시작해주세요.</p> 
-        <p>별도의 시간제한은 없습니다.</p>
+        <p>준비가 되시면 아래의 "시작" 버튼을 클릭하여 시작해주세요.</p> 
+        <p>별도의 시간제한은 없으니 편하게 답해주시되 지나치게 오래 고민하지는 말아주세요.</p>
       </div>
     `,
     choices: ["시작"],
@@ -574,7 +682,7 @@
         </div>
 
         <p class="trial-question">
-          두 문장이 자연스럽게 연결되나요?
+          두 문장의 연결이 자연스럽나요?
         </p>
 
       </div>
@@ -922,7 +1030,7 @@
     data_string: ()=>"\uFEFF" + jsPsych.data.get().csv(),
     wait_message: `
       <p>응답을 저장하고 있습니다.</p>
-      <p>페이지를 닫지 마세요.</p>
+      <p>창을 닫지 마시고 잠시만 기다려주세요.</p>
     `
   };
 
@@ -936,17 +1044,16 @@
     <div class="completion-box">
 
       <h2>
-        실험이 끝났습니다.
+        응답이 저장되었습니다.
       </h2>
 
       <p>
-        참여해 주셔서 감사합니다.
+        이제 창을 닫으셔도 됩니다.
       </p>
 
-      <p>
-        응답이 저장되었습니다.
-        이제 이 창을 닫으셔도 됩니다.
-      </p>
+      <h3>
+        참여해 주셔서 감사합니다!
+      </h3>
 
     </div>
   `,
