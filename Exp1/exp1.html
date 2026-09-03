@@ -1032,22 +1032,32 @@ return "\uFEFF" + header + "\n" + body;
 // SAVE TO DATAPIPE
 // ============================================================
 
-timeline.push({
+// timeline.push({
 
-type: jsPsychPipe,
+// type: jsPsychPipe,
 
-action: "save",
+// action: "save",
 
-experiment_id:
-  DATAPIPE_EXPERIMENT_ID,
+// experiment_id:
+//   DATAPIPE_EXPERIMENT_ID,
 
-filename:
-  filename,
+// filename:
+//   filename,
 
-data_string: () =>
-  buildExperimentCSV()
+// data_string: () =>
+//   buildExperimentCSV()
 
-});
+// });
+
+const save_data = {
+  type: jsPsychPipe,
+  action: "save",
+  experiment_id: "DpvkvDr9rv2q",
+  filename: filename,
+  data_string: ()=>jsPsych.data.get().csv()
+};
+
+timeline.push(save_data)
 
 
 // ============================================================
