@@ -321,6 +321,7 @@ const consent = {
        
         <p style="text-align: center;">
           홍준선, 450 Jane Stanford Way Building 460 Rm. 127, STANFORD, CA, 1-650-723-4284
+        </p>
 
         <p style="text-align: center;">
           <strong>연구 개요</strong>
@@ -940,9 +941,7 @@ timeline.push(consent);
       );
     });
 
-    const filename = `${subject_id}_exp1.csv`;
-
-if (DATAPIPE_EXPERIMENT_ID === "REPLACE_WITH_EXP1_ID") {
+const filename = `${subject_id}_exp1.csv`;
 
 // ============================================================
 // BUILD CSV
@@ -1086,9 +1085,9 @@ data: {
 
 });
   }
-  }
 
   jsPsych.run(timeline);
+
   </script>
 </body>
 </html>
