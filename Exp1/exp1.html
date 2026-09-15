@@ -264,8 +264,8 @@
     // Independently counterbalance button order
     const response_buttons =
       assignment_cell < 8
-        ? ["예", "아니요"]
-        : ["아니요", "예"];
+        ? ["예", "아니오"]
+        : ["아니오", "예"];
 
     //Store each trial in a timeline 
     const timeline = [];
@@ -380,7 +380,7 @@
                   name="age_18"
                   value="no"
                 >
-                아니요
+                아니오
               </label>
             </div>
           </div>
@@ -409,7 +409,7 @@
                   name="native_korean"
                   value="no"
                 >
-                아니요
+                아니오
               </label>
             </div>
           </div>
@@ -515,7 +515,7 @@
 
     //           <label>
     //             <input type="radio" name="age_18" value="no">
-    //             아니요
+    //             아니오
     //           </label>
     //         </div>
     //       </div>
@@ -533,7 +533,7 @@
 
     //           <label>
     //             <input type="radio" name="native_korean" value="no">
-    //             아니요
+    //             아니오
     //           </label>
     //         </div>
     //       </div>
@@ -628,7 +628,7 @@
           <div class="inst-box">
             <p>이 실험에서는 두개의 문장을 읽게 됩니다.</p>
             <p>문장들을 읽은 후, 두 번째 문장이 첫 번째 문장과 <strong>같은 의미를 자연스럽게 다시 표현한 것인지</strong> 판단해 주세요.</p>
-            <p>자연스럽게 다시 표현한 것이라고 생각하면 <strong>“예”</strong>, 그렇지 않다고 생각하면 <strong>“아니요”</strong>를 선택해 주세요.</p>
+            <p>자연스럽게 다시 표현한 것이라고 생각하면 <strong>“예”</strong>, 그렇지 않다고 생각하면 <strong>“아니오”</strong>를 선택해 주세요.</p>
           </div>
         <h3>예를 들어:</h3>
         <div class="inst-box">
@@ -653,7 +653,7 @@
     stimulus: `
       <div class="begin-box">
         <p>이 실험은 정답을 맞히는 시험이 아닙니다. 본인의 자연스러운 판단에 따라 답해 주세요.</p>
-        <p> 별도의 시간 제한은 없지만 너무 오래 고민하지 마시고, 처음 읽었을 때의 느낌에 따라 선택해주세요.</p>
+        <p>별도의 시간 제한은 없지만 너무 오래 고민하지 마시고, 처음 읽었을 때의 느낌에 따라 선택해주세요.</p>
         <p>준비가 되시면 아래의 "시작" 버튼을 클릭해주세요.</p>
       </div>
     `,

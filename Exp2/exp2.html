@@ -10,6 +10,7 @@
   <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-preload@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@2.1.0"></script>
   <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
   
   <!-- Load Stimuli -->
@@ -41,9 +42,7 @@
       padding: 20px 40px;
       background: white;
       border-radius: 12px;
-      box-shadow:
-        0 0 10px
-        rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       align-items: flex-start;
     }
 
@@ -64,15 +63,14 @@
       padding: 10px 20px;
       margin: 10px;
       border-radius: 8px;
-      background-color:
-        #64748b;
+      background-color: #64748b;
       color: white;
       border: none;
       cursor: pointer;
     }
 
     .jspsych-btn:hover {
-      background-color:#475569;
+      background-color: #475569;
     }
 
     /* Consent */
@@ -82,12 +80,12 @@
       text-align: justify;
     }
 
-    .jspsych-content.consent h3 {
+    .jspsych-content .consent h3 {
       font-size: 18px;
       line-height: 1.4;
     }
 
-  /* Instructions */
+    /* Instructions */
     .content {
       margin-top: 20px;
     }
@@ -132,270 +130,146 @@
       font-weight: 500;
     }
 
-    /* ============================================================
-       EXPERIMENTAL TRIALS
-    ============================================================ */
+    /* Experimental Trials */
 
     :root {
-      --stimulus-width:
-        650px;
+      --stimulus-width: 800px;
     }
 
-
     .trial-card {
-
       max-width: 900px;
-
       margin: 0 auto;
-
       text-align: center;
     }
 
-
     .trial-label {
-
       font-size: 16px;
-
       font-weight: 600;
-
       color: #64748b;
-
       margin-bottom: 8px;
     }
 
-
     .sentence-box {
-
-      background-color:
-        #f8fafc;
-
-      padding:
-        20px 25px;
-
+      background-color: #f8fafc;
+      padding: 20px 25px;
       border-radius: 10px;
-
       margin-bottom: 15px;
     }
 
-
     .target-sentence,
     .probe-sentence {
-
       font-size: 22px;
-
       font-weight: 500;
-
       margin: 0;
-
       line-height: 1.6;
     }
 
-
     .trial-question {
-
       font-size: 19px;
-
       font-weight: 500;
-
       margin-top: 30px;
     }
 
-
     .picture-section {
-
       display: flex;
-
       flex-direction: column;
-
       align-items: center;
-
       gap: 5px;
-
       margin-bottom: 10px;
     }
 
-
     .picture-description {
-
       font-size: 18px;
-
       font-weight: 500;
-
-      margin:
-        10px 0
-        15px 0;
+      margin: 10px 0 15px 0;
     }
-
 
     .context-block,
     .critical-block {
-
-      width:
-        var(--stimulus-width);
-
+      width: var(--stimulus-width);
       max-width: 100%;
-
       margin-left: auto;
-
       margin-right: auto;
-
       text-align: center;
     }
-
 
     .critical-block {
       margin-top: 25px;
     }
 
-
     .experiment-image {
-
       width: 100%;
-
-      max-width:
-        var(--stimulus-width);
-
+      max-width: var(--stimulus-width);
       height: auto;
-
       display: block;
-
-      margin:
-        0 auto;
+      margin: 0 auto;
     }
 
-
-    .stage1-context {
-      transform:
-        translateY(-172px);
+    .jspsych-content.experiment-stage {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto !important;
+      padding-top: 20px;
     }
 
+    .stage1-placeholder {
+      visibility: hidden;
+      pointer-events: none;
+    }
 
     .target-box {
       margin-top: 25px;
     }
 
-
-    .context-stage
-    .jspsych-btn {
-
-      transform:
-        translateY(100px);
-    }
-
-
-    /* ============================================================
-       SAVING
-    ============================================================ */
-
+    /* Saving */
     .saving-box {
-
-      background-color:
-        #ecfdf5;
-
+      background-color: #ecfdf5;
       padding: 30px;
-
       border-radius: 12px;
-
       text-align: center;
     }
-
 
     .saving-box h2 {
-
       margin-top: 0;
-
-      color:
-        #047857;
+      color: #047857;
     }
 
-
-    /* ============================================================
-       COMPLETION
-    ============================================================ */
-
+    /* Completion */
     .completion-box {
-
-      background-color:
-        #f0fdf4;
-
+      background-color: #f0fdf4;
       padding: 30px;
-
       border-radius: 12px;
-
       text-align: center;
     }
 
-
     .completion-box h2 {
-
       margin-top: 0;
-
-      color:
-        #15803d;
+      color: #15803d;
     }
 
-
-    /* ============================================================
-       PROGRESS BAR
-    ============================================================ */
-
+    /* Progress Bar */  
     #jspsych-progressbar-container {
-
-      background-color:
-        #f3f7f4;
-
-      padding:
-        10px 0;
-
+      background-color: #f3f7f4;
+      padding: 10px 0;
       margin-bottom: 20px;
     }
 
-
     #jspsych-progressbar-outer {
-
       width: 90%;
-
-      margin:
-        0 auto;
-
+      margin: 0 auto;
       height: 12px;
-
-      background-color:
-        #dfe9e2;
-
+      background-color: #dfe9e2;
       border-radius: 8px;
-
       overflow: hidden;
     }
 
-
     #jspsych-progressbar-inner {
-
       height: 100%;
-
-      background:
-        linear-gradient(
-          90deg,
-          #b7d9c2 0%,
-          #74b68b 55%,
-          #3f8f5f 100%
-        );
-
-      transition:
-        width 0.4s ease;
-
+      background: linear-gradient(90deg, #b7d9c2 0%,#74b68b 55%, #3f8f5f 100%);
+      transition: width 0.4s ease;
       border-radius: 8px;
-
-      box-shadow:
-        inset 0 1px 2px
-        rgba(
-          255,
-          255,
-          255,
-          0.45
-        );
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.45);
     }
-
   </style>
 
 </head>
@@ -414,7 +288,6 @@
 
     // Counterbalancing
     // 4 stimulus lists × 2 Yes/No button orders = 8 counterbalancing cells
-
     const assignment_cell =
       Math.floor(
         Math.random() * 8
@@ -427,8 +300,8 @@
     // Counterbalance Yes / No button order
     const response_buttons =
       assignment_cell < 4
-        ? ["예", "아니요"]
-        : ["아니요", "예"];
+        ? ["예", "아니오"]
+        : ["아니오", "예"];
 
     //Store each trial in a timeline 
     const timeline = [];
@@ -471,27 +344,19 @@
         });
     
     // Select 6 fillers
-    const selected_fillers =
-      makeExp2Fillers();
+    const selected_fillers = makeExp2Fillers();
 
     //Combine targets & fillers, with no consecutive fillers
     // Randomize targets
     const randomized_targets =
-      jsPsych.randomization.shuffle(
-        selected_targets
-      );
+      jsPsych.randomization.shuffle(selected_targets);
     // Randomize fillers
     const randomized_fillers =
-      jsPsych.randomization.shuffle(
-        selected_fillers
-      );
+      jsPsych.randomization.shuffle(selected_fillers);
 
     // 13 possible gaps around 12 targets: Put each filler into a different gap.
     const possible_gaps =
-      Array.from(
-        {length: randomized_targets.length + 1},
-        (_, index) => index
-      );
+      Array.from({length: randomized_targets.length + 1}, (_, index) => index);
 
     const selected_gaps =
       jsPsych.randomization
@@ -624,35 +489,230 @@
 
     timeline.push(consent);
 
+    // Eligibility
+    let eligibility_passed = false;
+    let retry_eligibility = false;
+    const eligibility_check = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: `
+        <div style="max-width:700px; margin:auto; text-align:center;">
+          <h3>
+            연구 참여에 동의해 주셔서 감사합니다.
+          </h3>
+          <h3>
+            본 연구의 대상은 만 18세 이상의 한국어 화자입니다.
+          </h3>
+        </div>
+      `,
+      html: `
+        <div style="max-width:700px; margin:auto;">
+          <div style="margin:30px 0;">
+            <p style="text-align:center;">
+              <strong>
+                1. 만 18세 이상이신가요?
+              </strong>
+            </p>
+
+            <div style="text-align:center;">
+              <label style="margin-right:25px;">
+                <input
+                  type="radio"
+                  name="age_18"
+                  value="yes"
+                  required
+                >
+                예
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="age_18"
+                  value="no"
+                >
+                아니요
+              </label>
+            </div>
+          </div>
+
+          <div style="margin:30px 0;">
+
+            <p style="text-align:center;">
+              <strong>
+                2. 어린 시절부터 한국어를 자연스럽게 습득하셨나요?
+              </strong>
+            </p>
+
+            <div style="text-align:center;">
+              <label style="margin-right:25px;">
+                <input
+                  type="radio"
+                  name="native_korean"
+                  value="yes"
+                  required
+                >
+                예
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="native_korean"
+                  value="no"
+                >
+                아니요
+              </label>
+            </div>
+          </div>
+        </div>
+      `,
+      button_label: "계속",
+      data: {phase: "eligibility"},
+      on_finish: function(data) {
+        eligibility_passed =
+          data.response.age_18 === "yes" &&
+          data.response.native_korean === "yes";
+        retry_eligibility = false;
+      }
+    };
+   
+    // Ineligible Screen
+    const eligibility_failed_trial = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: `
+        <div class="completion-box">
+          <p>
+            죄송하지만 본 연구의 참여 조건에 해당하지 않습니다.
+          </p>
+          <p>
+            응답을 잘못 선택하셨다면
+            <strong>“다시 확인하기”</strong>를 눌러 주세요.
+          </p>
+          <p>
+            관심을 가져주셔서 감사합니다.
+          </p>
+        </div>
+      `,
+      choices: [
+        "다시 확인하기",
+        "실험 종료"
+      ],
+      on_finish: function(data) {
+        if (data.response === 0) {
+          retry_eligibility = true;
+        } else {
+          jsPsych.abortExperiment(`
+            <div class="completion-box">
+              <p>
+                연구에 관심을 가져주셔서 감사합니다.
+              </p>
+
+              <p>
+                이제 창을 닫으셔도 됩니다.
+              </p>
+            </div>
+          `);
+        }
+      }
+    };
+
+    const eligibility_failed = {
+      timeline: [
+        eligibility_failed_trial
+      ],
+      conditional_function: function() {
+        return !eligibility_passed;
+      }
+    };
+
+    // Repeat
+    const eligibility_loop = {
+      timeline: [
+        eligibility_check,
+        eligibility_failed
+      ],
+      loop_function: function() {
+        return retry_eligibility;
+      }
+    };
+
+    timeline.push(eligibility_loop);
+
+
+    // Demographic information
+    const demographics = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: `
+        <div style="max-width:700px; margin:auto; text-align:center;">
+          <h3>
+            실험에 앞서 몇 가지 정보를 입력해주세요.
+          </h3>
+        </div>
+      `,
+      html: `
+        <div style="max-width:700px; margin:auto;">
+          <div style="margin:30px 0; text-align:center;">
+            <p>
+              <strong>1. 만 나이를 입력해 주세요.</strong>
+            </p>
+            <input type="number" name="age" min="18" max="120" required style="width:80px;padding:8px;font-size:16px;text-align:center;">
+          </div>
+
+          <div style="margin:30px 0; text-align:center;">
+            <p>
+              <strong>2. 성별을 선택해 주세요.</strong>
+            </p>
+            <label style="margin-right:20px;">
+              <input type="radio" name="gender" value="male" required>
+              남성
+            </label>
+
+            <label style="margin-right:20px;">
+              <input type="radio" name="gender" value="female">
+              여성
+            </label>
+
+            <label style="margin-right:20px;">
+              <input type="radio" name="gender" value="other">
+              기타
+            </label>
+
+            <label>
+              <input type="radio" name="gender"value="prefer_not_to_say">
+              밝히고 싶지 않음
+            </label>
+          </div>
+        </div>
+      `,
+      button_label: "계속",
+      data: {phase: "demographics"},
+      on_finish: function(data) {data.age = parseInt(data.response.age,10);data.gender = data.response.gender;}
+    };
+    timeline.push(demographics);
+
+
     // Instructions
     timeline.push({
       type: jsPsychInstructions,
+      record_data: false,
       pages: [
         `
-        <div class="instruction-box">
           <h2>
             실험에 참여해 주셔서 감사합니다!
           </h2>
-          <div class="instruction-highlight">
-            <p>
-              이 실험에서는 그림을 본 후 주어진 문장에 대해 질문에 답해 주시면 됩니다.
-            </p>
-          </div>
-          <div class="instruction-highlight">
-            <p>
-              그림은 화살표를 사이에 두고 두 부분으로 나누어져 있습니다.
-              화살표의 왼쪽은 처음 상태를, 오른쪽은 시간이 조금 지난 후의 상태를 나타냅니다.
-            </p>
-            <p>
-              예를 들어, 아래 그림은 처음에는 우산이 접혀 있었지만 이후에는 우산이 펼쳐진 상황을 나타냅니다.
-            </p>
-            <img src="ex/umbrella_change.png" class="instruction-example-image">
-            <p>
-              반면 아래 그림은  처음과 이후의 상태가 동일하여, 아무런 변화 없이 우산이 그대로 접혀 있는 상황을 나타냅니다.
-            </p>
-            <img src="ex/umbrella_no_change.png" class="instruction-example-image">
-          </div>
-        </div>
+          <p>
+            이 실험에서는 그림을 본 후 주어진 문장에 대해 질문에 답해 주시면 됩니다.
+          </p>
+          <p>
+            그림은 화살표를 사이에 두고 두 부분으로 나누어져 있습니다.
+            화살표의 왼쪽은 처음 상태를, 오른쪽은 시간이 조금 지난 후의 상태를 나타냅니다.
+          </p>
+          <p>
+            예를 들어, 아래 그림은 처음에는 우산이 접혀 있었지만 이후에는 우산이 펼쳐진 상황을 나타냅니다.
+          </p>
+          <img src="ex/umbrella_change.png" class="instruction-example-image">
+          <p>
+            반면 아래 그림은  처음과 이후의 상태가 동일하여, 아무런 변화 없이 우산이 그대로 접혀 있는 상황을 나타냅니다.
+          </p>
+          <img src="ex/umbrella_no_change.png" class="instruction-example-image">
         `,
         `
         <div class="instruction-box">
@@ -682,10 +742,10 @@
               </p>
             </div>
             <p>
-              두 그림을 잘 살펴본 뒤, 아래에 제시되는 문장을 읽고 주어진 질문에 답해 주시면 됩니다.
+              두 그림을 잘 살펴본 뒤, 아래에 제시되는 문장을 읽고 주어진 질문에 대해 <strong>예</strong> 혹은 <strong>아니오</strong>를 선택해 답해 주시면 됩니다. 
             </p>
             <p>
-              너무 오래 고민하지 마시고, <strong>처음 읽었을 때의 느낌에 따라</strong> 답변해 주세요.
+              위 예시의 경우, 문장이 상황을 올바르게 설명하므로 <strong>"예"</strong>를 선택하시면 됩니다.
             </p>
           </div>
         </div>
@@ -700,11 +760,12 @@
     // Begin Screen
     timeline.push({
       type: jsPsychHtmlButtonResponse,
+      record_data: false,
       stimulus: `
         <div class="begin-box">
-          <p>
-            준비가 되시면 시작해 주세요.
-          </p>
+          <p>이 실험은 정답을 맞히는 시험이 아닙니다. 본인의 자연스러운 판단에 따라 답해 주세요.</p>
+          <p>별도의 시간 제한은 없지만 너무 오래 고민하지 마시고, 처음 읽었을 때의 느낌에 따라 선택해 주세요.</p>
+          <p>준비가 되시면 아래의 "시작" 버튼을 클릭해 주세요.</p>
         </div>
       `,
       choices: ["시작"]
@@ -717,18 +778,36 @@
     function makeContextTrial(item) {
       return {
         type: jsPsychHtmlButtonResponse,
+        save_trial_parameters: {stimulus: false},
         stimulus: `
           <div class="trial-card">
-            <div class="context-block stage1-context">
+            <div class="context-block">
               <p class="picture-description">
                 먼저 다음과 같은 상황이 있었습니다.
               </p>
               <img class="experiment-image" src="${item.context_image}">
             </div>
+
+          <div class="stage1-placeholder">
+            <div class="critical-block">
+              <p class="picture-description">
+                이어서 다음과 같은 상황이 있었습니다.
+              </p>
+            <img class="experiment-image" src="${item.critical_image}">
           </div>
+          <div class="target-box">
+            <p class="target-sentence">
+              ${item.sentence}
+            </p>
+          </div>
+            <p class="trial-question">
+              주어진 문장이 두 번째 상황을 자연스럽게 설명하고 있나요?
+            </p>
+        </div>
+      </div>
         `,
         choices: ["다음"],
-        css_classes: ["context-stage"],
+        css_classes: ["experiment-stage", "context-stage"],
         data: {
           item_id: item.id,
           item_type: item.item_type,
@@ -747,11 +826,11 @@
       };
     }
 
-
     // Stage 2: Context + Critical + Sentence
     function makeJudgmentTrial(item) {
       return {
         type: jsPsychHtmlButtonResponse,
+        save_trial_parameters: {stimulus: false},
         stimulus: `
           <div class="trial-card">
             <div class="context-block">
@@ -776,8 +855,8 @@
             </p>
           </div>
         `,
-
         choices: response_buttons,
+        css_classes: ["experiment-stage", "judgment-stage"],
         data: {
           subject_id: subject_id,
           experiment: "Exp2",
@@ -823,135 +902,154 @@
         timeline.push(makeJudgmentTrial(item));
       });
 
+    // Payment contact
+    const payment_contact = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: `
+        <div style="max-width:700px; margin:auto; text-align:center;">
+          <h3>
+            참여 보상 지급을 위한 연락처
+          </h3>
 
-    // ================ TO BE DELETED ================
-    // LOCAL TEST END SCREEN
-    timeline.push({
+          <p>
+            참여 보상(기프티콘) 발송을 위해
+            휴대전화 번호를 입력해 주세요.
+          </p>
 
+          <p style="font-size:15px; color:#64748b;">
+            입력하신 연락처는 기프티콘 발송 이외의 용도로
+            사용되지 않으며, 보상 지급 완료 후 폐기됩니다.
+          </p>
+        </div>
+      `,
+      html: `
+        <div style="max-width:700px; margin:30px auto; text-align:center;">
+
+          <p>
+            <strong>휴대전화 번호</strong>
+          </p>
+
+          <input type="tel" name="phone_number" placeholder="010-1234-5678" required
+            style="width:200px;padding:10px;font-size:18px;text-align:center;">
+        </div>
+      `,
+      button_label: "제출",
+      data: {
+        phase: "payment_contact",
+        subject_id: subject_id
+      },
+      on_finish: function(data) {
+        data.phone_number =
+          data.response.phone_number.trim();
+      }
+    };
+
+    timeline.push(payment_contact);
+
+    // ============================================================
+    // LOCAL DEBUG: DOWNLOAD CSV
+    // Delete this section before launching the real experiment.
+    // ============================================================
+
+    function downloadLocalCSV() {
+      const csv =
+        "\uFEFF" +
+        jsPsych.data.get().csv();
+
+      const blob =
+        new Blob(
+          [csv],
+          {
+            type:
+              "text/csv;charset=utf-8;"
+          }
+        );
+
+      const url =
+        URL.createObjectURL(blob);
+
+      const link =
+        document.createElement("a");
+
+      link.href =
+        url;
+
+      link.download =
+        `exp2_${subject_id}.csv`;
+
+      document.body.appendChild(
+        link
+      );
+
+      link.click();
+
+      document.body.removeChild(
+        link
+      );
+
+      URL.revokeObjectURL(
+        url
+      );
+    }
+
+    const local_download = {
       type:
         jsPsychHtmlButtonResponse,
-
-
+      record_data: false,
       stimulus: `
-
-        <div class="begin-box">
+        <div class="saving-box">
 
           <h2>
             Local test mode
           </h2>
 
           <p>
-            실험이 끝났습니다.
-          </p>
-
-          <p>
-            아래 버튼을 눌러
-            수집된 데이터를 확인해 주세요.
+            아래 버튼을 눌러 현재 실험 데이터를
+            CSV 파일로 저장해 주세요.
           </p>
 
         </div>
-
       `,
-
-
       choices: [
-        "데이터 확인"
-      ]
+        "CSV 다운로드"
+      ],
 
-    });
-
-
-    // ============================================================
-    // DATA PREVIEW
-    // ============================================================
-
-    timeline.push({
-
-      type:
-        jsPsychHtmlKeyboardResponse,
-
-
-      stimulus:
+      on_finish:
         function() {
+          downloadLocalCSV();
+        }
+    };
 
+    timeline.push(local_download);
 
-          const experiment_data =
-    jsPsych.data
-      .get()
-      .values()
-      .filter(
-        data =>
-          (
-            data.item_type === "target" ||
-            data.item_type === "filler"
-          )
-          &&
-          data.trial_stage === "judgment"
-      )
-      .map(data => ({
-        item_id: data.item_id,
-        item_type: data.item_type,
-        item: data.item,
+  // Completion Screen
 
-        qp_position: data.qp_position,
-        context_condition: data.context_condition,
+  timeline.push({
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: `
+    <div class="completion-box">
 
-        sentence_type: data.sentence_type,
-        lexical_set: data.lexical_set,
+      <h2>
+        응답이 저장되었습니다.
+      </h2>
 
-        sentence: data.sentence,
+      <p>
+        이제 창을 닫으셔도 됩니다.
+      </p>
 
-        response_label: data.response_label,
-        response_binary: data.response_binary,
+      <h3>
+        참여해 주셔서 감사합니다!
+      </h3>
 
-        context_viewing_rt: data.context_viewing_rt,
-        judgment_rt: data.rt,
+    </div>
+  `,
+  choices: "NO_KEYS",
+  data: {
+    phase: "completion"
+    }
+  });
 
-        correct_response: data.correct_response,
-        correct: data.correct
-      }));
-
-
-          return `
-
-            <div class="data-box">
-
-
-              <h2>
-                Collected experiment data
-              </h2>
-
-
-              <pre
-                style="
-                  white-space: pre-wrap;
-                  background: #f8fafc;
-                  padding: 20px;
-                  border-radius: 10px;
-                  font-size: 14px;
-                  overflow: auto;
-                "
-              >${JSON.stringify(
-                experiment_data,
-                null,
-                2
-              )}</pre>
-
-
-            </div>
-
-          `;
-
-        },
-
-
-      choices:
-        "NO_KEYS"
-
-    });
-
-    // Run
-    jsPsych.run(timeline);
+  jsPsych.run(timeline);
 </script>
 </body>
 </html>

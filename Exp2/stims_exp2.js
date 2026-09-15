@@ -1,5 +1,3 @@
-// EXPERIMENT 2 STIMULI
-
 const BASE_EXP2_STIMULI = [
   // Item 1: Child + blocks into box
   {item: 1, 
@@ -85,373 +83,118 @@ const BASE_EXP2_STIMULI = [
     subject_critical: "stims/student_break_subject_critical.png"
   },
 
-  // ==========================================================
   // Item 8: Child + apples
-  // ==========================================================
-
-  {
-    item: 8,
-
-    object_sentence:
-      "아이가 모든 사과를 먹지 않았다.",
-
-    subject_sentence:
-      "모든 아이가 사과를 먹지 않았다.",
-
-    object_ES:
-      "stims/child_eat_object_ES.png",
-
-    object_EF:
-      "stims/child_eat_object_EF.png",
-
-    object_critical:
-      "stims/child_eat_object_critical.png",
-
-    subject_ES:
-      "stims/child_eat_subject_ES.png",
-
-    subject_EF:
-      "stims/child_eat_subject_EF.png",
-
-    subject_critical:
-      "stims/child_eat_subject_critical.png"
+  {item: 8,
+    object_sentence: "아이가 모든 사과를 먹지 않았다.",
+    subject_sentence: "모든 아이가 사과를 먹지 않았다.",
+    object_ES: "stims/child_eat_object_ES.png",
+    object_EF: "stims/child_eat_object_EF.png",
+    object_critical: "stims/child_eat_object_critical.png",
+    subject_ES: "stims/child_eat_subject_ES.png",
+    subject_EF: "stims/child_eat_subject_EF.png",
+    subject_critical: "stims/child_eat_subject_critical.png"
   },
 
-
-  // ==========================================================
   // Item 9: Police officer + doors
-  // ==========================================================
-
-  {
-    item: 9,
-
-    object_sentence:
-      "경찰이 모든 문을 열지 않았다.",
-
-    subject_sentence:
-      "모든 경찰이 문을 열지 않았다.",
-
-    object_ES:
-      "stims/police_open_object_ES.png",
-
-    object_EF:
-      "stims/police_open_object_EF.png",
-
-    object_critical:
-      "stims/police_open_object_critical.png",
-
-    subject_ES:
-      "stims/police_open_subject_ES.png",
-
-    subject_EF:
-      "stims/police_open_subject_EF.png",
-
-    subject_critical:
-      "stims/police_open_subject_critical.png"
+  {item: 9,
+    object_sentence: "경찰이 모든 문을 열지 않았다.",
+    subject_sentence: "모든 경찰이 문을 열지 않았다.",
+    object_ES: "stims/police_open_object_ES.png",
+    object_EF: "stims/police_open_object_EF.png",
+    object_critical: "stims/police_open_object_critical.png",
+    subject_ES: "stims/police_open_subject_ES.png",
+    subject_EF: "stims/police_open_subject_EF.png",
+    subject_critical: "stims/police_open_subject_critical.png"
   },
 
-
-  // ==========================================================
-  // Item 10: Horse + fences
-  // ==========================================================
-
-  // {
-  //   item: 10,
-
-  //   object_sentence:
-  //     "말이 모든 울타리를 뛰어넘지 않았다.",
-
-  //   subject_sentence:
-  //     "모든 말이 울타리를 뛰어넘지 않았다.",
-
-  //   object_ES:
-  //     "stims/horse_jump_object_ES.png",
-
-  //   object_EF:
-  //     "stims/horse_jump_object_EF.png",
-
-  //   object_critical:
-  //     "stims/horse_jump_object_critical.png",
-
-  //   subject_ES:
-  //     "stims/horse_jump_subject_ES.png",
-
-  //   subject_EF:
-  //     "stims/horse_jump_subject_EF.png",
-
-  //   subject_critical:
-  //     "stims/horse_jump_subject_critical.png"
-  // },
-
-
-  // ==========================================================
+  // Item 10: Gardner + flower
+  {item: 10,
+    object_sentence: "정원사가 모든 꽃에 물을 주지 않았다.",
+    subject_sentence: "모든 정원사가 꽃에 물을 주지 않았다.",
+    object_ES: "stims/gardener_water_object_ES.png",
+    object_EF: "stims/gardener_water_object_EF.png",
+    object_critical: "stims/gardener_water_object_critical.png",
+    subject_ES: "stims/gardener_water_subject_ES.png",
+    subject_EF: "stims/gardener_water_subject_EF.png",
+    subject_critical: "stims/gardener_water_subject_critical.png"
+  },
+ 
   // Item 11: Student + books
-  // ==========================================================
-
-  {
-    item: 11,
-
-    object_sentence:
-      "학생이 모든 책을 찢지 않았다.",
-
-    subject_sentence:
-      "모든 학생이 책을 찢지 않았다.",
-
-    object_ES:
-      "stims/student_tear_object_ES.png",
-
-    object_EF:
-      "stims/student_tear_object_EF.png",
-
-    object_critical:
-      "stims/student_tear_object_critical.png",
-
-    subject_ES:
-      "stims/student_tear_subject_ES.png",
-
-    subject_EF:
-      "stims/student_tear_subject_EF.png",
-
-    subject_critical:
-      "stims/student_tear_subject_critical.png"
+  {item: 11,
+    object_sentence: "학생이 모든 책을 찢지 않았다.",
+    subject_sentence: "모든 학생이 책을 찢지 않았다.",
+    object_ES: "stims/student_tear_object_ES.png",
+    object_EF: "stims/student_tear_object_EF.png",
+    object_critical: "stims/student_tear_object_critical.png",
+    subject_ES: "stims/student_tear_subject_ES.png",
+    subject_EF: "stims/student_tear_subject_EF.png",
+    subject_critical: "stims/student_tear_subject_critical.png"
   },
 
-
-  // ==========================================================
   // Item 12: Teacher + lights
-  // ==========================================================
-
-  {
-    item: 12,
-
-    object_sentence:
-      "선생님이 모든 전등을 켜지 않았다.",
-
-    subject_sentence:
-      "모든 선생님이 전등을 켜지 않았다.",
-
-    object_ES:
-      "stims/teacher_light_object_ES.png",
-
-    object_EF:
-      "stims/teacher_light_object_EF.png",
-
-    object_critical:
-      "stims/teacher_light_object_critical.png",
-
-    subject_ES:
-      "stims/teacher_light_subject_ES.png",
-
-    subject_EF:
-      "stims/teacher_light_subject_EF.png",
-
-    subject_critical:
-      "stims/teacher_light_subject_critical.png"
+  {item: 12,
+    object_sentence: "선생님이 모든 전등을 켜지 않았다.",
+    subject_sentence: "모든 선생님이 전등을 켜지 않았다.",
+    object_ES: "stims/teacher_light_object_ES.png",
+    object_EF: "stims/teacher_light_object_EF.png",
+    object_critical: "stims/teacher_light_object_critical.png",
+    subject_ES: "stims/teacher_light_subject_ES.png",
+    subject_EF: "stims/teacher_light_subject_EF.png",
+    subject_critical: "stims/teacher_light_subject_critical.png"
   }
-
 ];
 
-
-// ============================================================
-// AUTOMATICALLY CREATE FOUR CONDITIONS PER ITEM
-// ============================================================
-
+// Automatically create 4 conditions per item
 window.EXP2_STIMULI =
   BASE_EXP2_STIMULI.flatMap(item => {
-
     const item_code =
       String(item.item).padStart(2, "0");
-
     return [
-
       // OBJECT + ES
       {
         id: `T${item_code}_OBJ_ES`,
         item: item.item,
         item_type: "target",
-
         qp_position: "object",
         context_condition: "ES",
-
-        sentence:
-          item.object_sentence,
-
-        context_image:
-          item.object_ES,
-
-        critical_image:
-          item.object_critical
+        sentence: item.object_sentence,
+        context_image: item.object_ES,
+        critical_image: item.object_critical
       },
-
-
       // OBJECT + EF
       {
         id: `T${item_code}_OBJ_EF`,
         item: item.item,
         item_type: "target",
-
         qp_position: "object",
         context_condition: "EF",
-
-        sentence:
-          item.object_sentence,
-
-        context_image:
-          item.object_EF,
-
-        critical_image:
-          item.object_critical
+        sentence: item.object_sentence,
+        context_image: item.object_EF,
+        critical_image: item.object_critical
       },
-
-
       // SUBJECT + ES
       {
         id: `T${item_code}_SUBJ_ES`,
         item: item.item,
         item_type: "target",
-
         qp_position: "subject",
         context_condition: "ES",
-
-        sentence:
-          item.subject_sentence,
-
-        context_image:
-          item.subject_ES,
-
-        critical_image:
-          item.subject_critical
+        sentence: item.subject_sentence,
+        context_image: item.subject_ES,
+        critical_image: item.subject_critical
       },
-
-
       // SUBJECT + EF
       {
         id: `T${item_code}_SUBJ_EF`,
         item: item.item,
         item_type: "target",
-
         qp_position: "subject",
         context_condition: "EF",
-
-        sentence:
-          item.subject_sentence,
-
-        context_image:
-          item.subject_EF,
-
-        critical_image:
-          item.subject_critical
+        sentence: item.subject_sentence,
+        context_image: item.subject_EF,
+        critical_image: item.subject_critical
       }
-
     ];
-
-  });
-  
-  // ============================================================
-  // AUTOMATICALLY CREATE FOUR CONDITIONS PER ITEM
-  // ============================================================
-
-  window.EXP2_STIMULI =
-  BASE_EXP2_STIMULI.flatMap(item => {
-
-    const item_code =
-      String(item.item).padStart(2, "0");
-
-    return [
-
-      // ======================================================
-      // OBJECT + ES
-      // ======================================================
-
-      {
-        id: `T${item_code}_OBJ_ES`,
-        item: item.item,
-        item_type: "target",
-
-        qp_position: "object",
-        context_condition: "ES",
-
-        sentence:
-          item.object_sentence,
-
-        context_image:
-          item.object_ES,
-
-        critical_image:
-          item.object_critical
-      },
-
-
-      // ======================================================
-      // OBJECT + EF
-      // ======================================================
-
-      {
-        id: `T${item_code}_OBJ_EF`,
-        item: item.item,
-        item_type: "target",
-
-        qp_position: "object",
-        context_condition: "EF",
-
-        sentence:
-          item.object_sentence,
-
-        context_image:
-          item.object_EF,
-
-        critical_image:
-          item.object_critical
-      },
-
-
-      // ======================================================
-      // SUBJECT + ES
-      // ======================================================
-
-      {
-        id: `T${item_code}_SUBJ_ES`,
-        item: item.item,
-        item_type: "target",
-
-        qp_position: "subject",
-        context_condition: "ES",
-
-        sentence:
-          item.subject_sentence,
-
-        context_image:
-          item.subject_ES,
-
-        critical_image:
-          item.subject_critical
-      },
-
-
-      // ======================================================
-      // SUBJECT + EF
-      // ======================================================
-
-      {
-        id: `T${item_code}_SUBJ_EF`,
-        item: item.item,
-        item_type: "target",
-
-        qp_position: "subject",
-        context_condition: "EF",
-
-        sentence:
-          item.subject_sentence,
-
-        context_image:
-          item.subject_EF,
-
-        critical_image:
-          item.subject_critical
-      }
-
-    ];
-
   });
 
   const BASE_EXP2_FILLER = [
@@ -477,7 +220,7 @@ window.EXP2_STIMULI =
       subject_critical_yes: "fillers/police_box_subject_critical_y.png",
       subject_critical_no: "fillers/police_box_subject_critical_n.png"
     },
-    // Filler 2: Waiter — break ++++++++++++++++
+    // Filler 2: Waiter — break
     {item: 2,
       lexical_set: "waiter_break",
       sentence_options: [
@@ -490,14 +233,14 @@ window.EXP2_STIMULI =
           subject_sentence: "모든 웨이터가 접시를 깼다."
         }
       ],
-      object_context_ES: "fillers/chef_mug_object_context_ES.png",
-      object_context_EF: "fillers/chef_mug_object_context_EF.png",
-      object_critical_yes: "fillers/chef_dish_object_critical_y.png",
-      object_critical_no: "fillers/chef_dish_object_critical_n.png",
-      subject_context_ES: "fillers/chef_mug_subject_context_ES.png",
-      subject_context_EF:"fillers/chef_mug_subject_context_EF.png",
-      subject_critical_yes: "fillers/chef_dish_subject_critical_y.png",
-      subject_critical_no: "fillers/chef_dish_subject_critical_n.png"
+      object_context_ES: "fillers/waiter_mug_object_context_ES.png",
+      object_context_EF: "fillers/waiter_mug_object_context_EF.png",
+      object_critical_yes: "fillers/waiter_dish_object_critical_y.png",
+      object_critical_no: "fillers/waiter_dish_object_critical_n.png",
+      subject_context_ES: "fillers/waiter_mug_subject_context_ES.png",
+      subject_context_EF:"fillers/waiter_mug_subject_context_EF.png",
+      subject_critical_yes: "fillers/waiter_dish_subject_critical_y.png",
+      subject_critical_no: "fillers/waiter_dish_subject_critical_n.png"
     },
     // Filler 3: Student — fold
     {item: 3,
@@ -542,8 +285,8 @@ window.EXP2_STIMULI =
       lexical_set: "doctor_beer",
       sentence_options: [
         {type: "numeral",
-          object_sentence: "의사가 맥주 두 잔을 마셨다.",
-          subject_sentence: "두 명의 의사가 맥주를 마셨다."
+          object_sentence: "의사가 맥주 세 잔을 마셨다.",
+          subject_sentence: "세 명의 의사가 맥주를 마셨다."
         }
       ],
       object_context_ES: "fillers/doctor_wine_object_context_ES.png",
@@ -560,8 +303,8 @@ window.EXP2_STIMULI =
       lexical_set: "bear_fish",
       sentence_options: [
         {type: "numeral",
-          object_sentence: "곰이 생선 두 마리를 먹었다.",
-          subject_sentence: "두 마리의 곰이 생선을 먹었다."
+          object_sentence: "곰이 생선 세 마리를 먹었다.",
+          subject_sentence: "세 마리의 곰이 생선을 먹었다."
         }
       ],
       object_context_ES: "fillers/bear_honeycomb_object_context_ES.png",
@@ -575,29 +318,15 @@ window.EXP2_STIMULI =
     },
 ];
 
-// ============================================================
-// MAKE 6 FILLERS FOR ONE PARTICIPANT
-// ============================================================
-
+// Make 12 fillers for one participant
 function makeExp2Fillers() {
-
-  // =========================================================
-  // SAFETY CHECK
-  //
-  // Current design:
-  // 6 lexical sets × 2 QP positions
-  // = 12 filler trials
-  // =========================================================
-
+  // Safety Check
+  // Current design: 6 lexical sets × 2 QP positions = 12 filler trials
   if (BASE_EXP2_FILLER.length !== 6) {
-
     throw new Error(
       `Exp2 filler design requires exactly 6 lexical sets, but ${BASE_EXP2_FILLER.length} were found.`
     );
-
   }
-
-
   // =========================================================
   // 1. Create OBJECT + SUBJECT version of every lexical set
   //
@@ -960,7 +689,7 @@ function makeExp2Fillers() {
           correct_response:
             answer === "yes"
               ? "예"
-              : "아니요"
+              : "아니오"
 
         };
 

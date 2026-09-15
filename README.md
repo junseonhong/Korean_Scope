@@ -8,3 +8,7 @@ Scopal Interpretation of Korean negation-quantifier
 4 attention checks
 
 [Experiment 2]
+
+
+[Experiment 3]
+
