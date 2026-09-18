@@ -699,7 +699,7 @@
             실험에 참여해 주셔서 감사합니다!
           </h2>
           <p>
-            이 실험에서는 그림을 본 후 주어진 문장에 대해 질문에 답해 주시면 됩니다.
+            이 실험에서는 그림을 본 후 주어진 문장에 대한 질문에 답해 주시면 됩니다.
           </p>
           <p>
             그림은 화살표를 사이에 두고 두 부분으로 나누어져 있습니다.
@@ -910,26 +910,22 @@
           <h3>
             참여 보상 지급을 위한 계좌 정보
           </h3>
-
           <p>
-            참여 보상(기프티콘) 발송을 위해
+            참여 보상 지급을 위해
             계좌번호를 입력해 주세요.
           </p>
-
           <p style="font-size:15px; color:#64748b;">
-            입력하신 정보는 기프티콘 발송 이외의 용도로
-            사용되지 않으며, 보상 지급 완료 후 폐기됩니다.
+            입력하신 정보는 보상 지급 이외의 용도로
+            사용되지 않으며, 목적 달성 후 즉시 폐기됩니다.
           </p>
         </div>
       `,
       html: `
         <div style="max-width:700px; margin:30px auto; text-align:center;">
-
           <p>
             <strong>계좌 번호</strong>
           </p>
-
-          <input type="tel" name="phone_number" placeholder="우리 / 1002-012-56789" required
+          <input type="tel" name="account_number" placeholder="우리 / 1002-012-56789" required
             style="width:200px;padding:10px;font-size:18px;text-align:center;">
         </div>
       `,
@@ -939,8 +935,7 @@
         subject_id: subject_id
       },
       on_finish: function(data) {
-        data.phone_number =
-          data.response.phone_number.trim();
+        data.account_number = data.response.account_number.trim();
       }
     };
 
