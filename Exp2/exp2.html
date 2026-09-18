@@ -125,11 +125,6 @@
       text-align: center;
     }
 
-    .begin-box p {
-      font-size: 22px;
-      font-weight: 500;
-    }
-
     /* Experimental Trials */
 
     :root {
@@ -906,27 +901,34 @@
     const payment_contact = {
       type: jsPsychSurveyHtmlForm,
       preamble: `
-        <div style="max-width:700px; margin:auto; text-align:center;">
+         <div style="max-width:900px; margin:auto; text-align:center;">
           <h3>
-            참여 보상 지급을 위한 계좌 정보
+            사례비 지급을 위한 계좌 정보
           </h3>
           <p>
-            참여 보상 지급을 위해
-            계좌번호를 입력해 주세요.
-          </p>
-          <p style="font-size:15px; color:#64748b;">
-            입력하신 정보는 보상 지급 이외의 용도로
-            사용되지 않으며, 목적 달성 후 즉시 폐기됩니다.
+            연구 참여 사례비를 보내드리기 위해 계좌 정보를 수집하고 있습니다. 아래에 정보를 입력해 주세요.
           </p>
         </div>
       `,
       html: `
         <div style="max-width:700px; margin:30px auto; text-align:center;">
-          <p>
-            <strong>계좌 번호</strong>
+          <p> 
+            <strong>예금주명</strong>
           </p>
-          <input type="tel" name="account_number" placeholder="우리 / 1002-012-56789" required
-            style="width:200px;padding:10px;font-size:18px;text-align:center;">
+          <input type="text" name="account_holder" required style="width:200px;padding:10px;font-size:18px;text-align:center;">
+          <p>
+            <strong>은행</strong>
+          </p>
+          <input type="text" name="bank_name"
+            placeholder="예: 우리" required style="width:200px;padding:10px;font-size:18px;text-align:center;">
+          <p>
+            <strong>계좌번호</strong>
+          </p>
+          <input type="text" name="account_number" placeholder="예: 1002-012-567890" required style="width:220px;padding:10px;font-size:18px;text-align:center;">
+          <p style="font-size:15px; color:#64748b;">
+            입력하신 정보는 사례비 지급 외의 용도로
+            사용되지 않으며, 지급이 완료된 후 즉시 폐기됩니다.
+          </p>
         </div>
       `,
       button_label: "제출",
@@ -935,6 +937,8 @@
         subject_id: subject_id
       },
       on_finish: function(data) {
+        data.account_holder = data.response.account_holder.trim();
+        data.bank_name = data.response.bank_name.trim();
         data.account_number = data.response.account_number.trim();
       }
     };
@@ -964,72 +968,36 @@
     // ============================================================
 
     // function downloadLocalCSV() {
-    //   const csv =
-    //     "\uFEFF" +
-    //     jsPsych.data.get().csv();
-
+    //   const csv = "\uFEFF" + jsPsych.data.get().csv();
     //   const blob =
-    //     new Blob(
-    //       [csv],
-    //       {
-    //         type:
-    //           "text/csv;charset=utf-8;"
-    //       }
-    //     );
-
-    //   const url =
-    //     URL.createObjectURL(blob);
-
-    //   const link =
-    //     document.createElement("a");
-
-    //   link.href =
-    //     url;
-
-    //   link.download =
-    //     `exp2_${subject_id}.csv`;
-
-    //   document.body.appendChild(
-    //     link
-    //   );
-
+    //     new Blob([csv], {type: "text/csv;charset=utf-8;"});
+    //   const url = URL.createObjectURL(blob);
+    //   const link = document.createElement("a");
+    //   link.href = url;
+    //   link.download = `exp2_${subject_id}.csv`;
+    //   document.body.appendChild(link);
     //   link.click();
-
-    //   document.body.removeChild(
-    //     link
-    //   );
-
-    //   URL.revokeObjectURL(
-    //     url
-    //   );
+    //   document.body.removeChild(link);
+    //   URL.revokeObjectURL(url);
     // }
 
     // const local_download = {
-    //   type:
-    //     jsPsychHtmlButtonResponse,
+    //   type: jsPsychHtmlButtonResponse,
     //   record_data: false,
     //   stimulus: `
     //     <div class="saving-box">
-
     //       <h2>
     //         Local test mode
     //       </h2>
-
     //       <p>
     //         아래 버튼을 눌러 현재 실험 데이터를
     //         CSV 파일로 저장해 주세요.
     //       </p>
-
     //     </div>
     //   `,
-    //   choices: [
-    //     "CSV 다운로드"
-    //   ],
-
+    //   choices: ["CSV 다운로드"],
     //   on_finish:
-    //     function() {
-    //       downloadLocalCSV();
-    //     }
+    //     function() {downloadLocalCSV();}
     // };
 
     // timeline.push(local_download);
