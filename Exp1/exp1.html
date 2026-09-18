@@ -1051,100 +1051,99 @@
 
     timeline.push(payment_contact);
 
-    // Saving data 
-    // const filename = `exp1_${subject_id}.csv`;
+    //Saving data 
+    const filename = `exp1_${subject_id}.csv`;
 
-    // const save_data = {
-    //   type: jsPsychPipe,
-    //   action: "save",
-    //   experiment_id: "DpvkvDr9rv2q",
-    //   filename: filename,
-    //   data_string: ()=>"\uFEFF" + jsPsych.data.get().csv(),
-    //   wait_message: `
-    //     <p>응답을 저장하고 있습니다.</p>
-    //     <p>창을 닫지 마시고 잠시만 기다려주세요.</p>
-    //   `
-    // };
+    const save_data = {
+      type: jsPsychPipe,
+      action: "save",
+      experiment_id: "DpvkvDr9rv2q",
+      filename: filename,
+      data_string: ()=>"\uFEFF" + jsPsych.data.get().csv(),
+      wait_message: `
+        <p>응답을 저장하고 있습니다.</p>
+        <p>창을 닫지 마시고 잠시만 기다려주세요.</p>
+      `
+    };
 
-    // timeline.push(save_data)
+    timeline.push(save_data)
 
     // ============================================================
     // LOCAL DEBUG: DOWNLOAD CSV
     // Delete this section before launching the real experiment.
     // ============================================================
 
-    function downloadLocalCSV() {
-      const csv =
-        "\uFEFF" +
-        jsPsych.data.get().csv();
+    // function downloadLocalCSV() {
+    //   const csv =
+    //     "\uFEFF" +
+    //     jsPsych.data.get().csv();
 
-      const blob =
-        new Blob(
-          [csv],
-          {
-            type:
-              "text/csv;charset=utf-8;"
-          }
-        );
+    //   const blob =
+    //     new Blob(
+    //       [csv],
+    //       {
+    //         type:
+    //           "text/csv;charset=utf-8;"
+    //       }
+    //     );
 
-      const url =
-        URL.createObjectURL(blob);
+    //   const url =
+    //     URL.createObjectURL(blob);
 
-      const link =
-        document.createElement("a");
+    //   const link =
+    //     document.createElement("a");
 
-      link.href =
-        url;
+    //   link.href =
+    //     url;
 
-      link.download =
-        `exp1_${subject_id}.csv`;
+    //   link.download =
+    //     `exp1_${subject_id}.csv`;
 
-      document.body.appendChild(
-        link
-      );
+    //   document.body.appendChild(
+    //     link
+    //   );
 
-      link.click();
+    //   link.click();
 
-      document.body.removeChild(
-        link
-      );
+    //   document.body.removeChild(
+    //     link
+    //   );
 
-      URL.revokeObjectURL(
-        url
-      );
-    }
+    //   URL.revokeObjectURL(
+    //     url
+    //   );
+    // }
 
-    const local_download = {
-      type:
-        jsPsychHtmlButtonResponse,
-      stimulus: `
-        <div class="saving-box">
+    // const local_download = {
+    //   type:
+    //     jsPsychHtmlButtonResponse,
+    //   stimulus: `
+    //     <div class="saving-box">
 
-          <h2>
-            Local test mode
-          </h2>
+    //       <h2>
+    //         Local test mode
+    //       </h2>
 
-          <p>
-            아래 버튼을 눌러 현재 실험 데이터를
-            CSV 파일로 저장해 주세요.
-          </p>
+    //       <p>
+    //         아래 버튼을 눌러 현재 실험 데이터를
+    //         CSV 파일로 저장해 주세요.
+    //       </p>
 
-        </div>
-      `,
-      choices: [
-        "CSV 다운로드"
-      ],
+    //     </div>
+    //   `,
+    //   choices: [
+    //     "CSV 다운로드"
+    //   ],
 
-      on_finish:
-        function() {
-          downloadLocalCSV();
-        }
-    };
+    //   on_finish:
+    //     function() {
+    //       downloadLocalCSV();
+    //     }
+    // };
 
-    timeline.push(local_download);
+    // timeline.push(local_download);
 
   // Completion Screen
-
   timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
