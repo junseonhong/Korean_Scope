@@ -97,6 +97,16 @@
       text-align: center;
     }
 
+    .example-screen {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 30px;
+      background-color: white;
+      border: 1px solid #dbe3ea;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
     .jspsych-instructions-nav {
       margin-top: 30px;
       text-align: center;
@@ -115,6 +125,14 @@
       display: block;
       margin:
         20px auto;
+    }
+
+    .practice-image {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
     }
 
   /* Start screen */
@@ -690,24 +708,49 @@
       record_data: false,
       pages: [
         `
+        <div class="content">
           <h2>
             실험에 참여해 주셔서 감사합니다!
           </h2>
+          <div class="inst-box">
           <p>
-            이 실험에서는 그림을 본 후 주어진 문장에 대한 질문에 답해 주시면 됩니다.
+            이 실험은 그림을 본 후 주어진 문장에 대한 질문에 답하는 실험입니다.
           </p>
+          </div>
+           <p>본 실험은 컴퓨터 환경에 맞게 구성되어 있습니다.<br>
+            원활한 실험 진행을 위해 가능하면 컴퓨터를 이용해 참여해 주세요.</p>
+        </div>
+        `,
+        `
+        <h3>
+          먼저 그림에 대해 설명드리겠습니다.
+        </h3>
           <p>
-            그림은 화살표를 사이에 두고 두 부분으로 나누어져 있습니다.
+            이 실험에서 제시되는 그림은 화살표를 사이에 두고 두 부분으로 나누어져 있습니다.<br>
             화살표의 왼쪽은 처음 상태를, 오른쪽은 시간이 조금 지난 후의 상태를 나타냅니다.
           </p>
+          <h3>
+            예를 들어:
+          </h3>
           <p>
-            예를 들어, 아래 그림은 처음에는 우산이 접혀 있었지만 이후에는 우산이 펼쳐진 상황을 나타냅니다.
+            그림 1은 처음에는 접혀 있던 우산이 이후에는 펼쳐진 상황을 나타내는 그림입니다.
           </p>
-          <img src="ex/umbrella_change.png" class="instruction-example-image">
+          <div class="example-screen">
+            <img src="ex/umbrella_change.png" class="instruction-example-image">
+            <p>
+              그림 1
+            </p>
+          </div>
           <p>
-            반면 아래 그림은 처음과 이후의 상태가 동일하여, 아무런 변화 없이 우산이 그대로 접혀 있는 상황을 나타냅니다.
+            그림 2는 처음과 이후의 상태가 동일하여, 아무런 변화 없이 우산이 그대로 접혀 있는 상황을 나타내는 그림입니다.
           </p>
-          <img src="ex/umbrella_no_change.png" class="instruction-example-image">
+          <div class="example-screen">
+            <img src="ex/umbrella_no_change.png" class="instruction-example-image">
+            <p>
+              그림 2
+            </p>
+          </div>
+        </div>
         `,
         `
         <div class="instruction-box">
@@ -719,29 +762,33 @@
             <h3>
               예를 들어, 다음과 같은 화면을 보게 됩니다:
             </h3>
-            <div class="inst-box">
+            <div class="example-screen">
               <p>
                 먼저 다음과 같은 상황이 있었습니다.
               </p>
-              <img src="ex/umbrella_change.png" class="instruction-example-image">
+              <img src="ex/door_opening.png" class="instruction-example-image">
               <p>
                 이어서 다음과 같은 상황이 있었습니다.
               </p>
-              <img src="ex/umbrella_no_change.png" class="instruction-example-image">
+              <img src="ex/window_opening.png" class="instruction-example-image">
               <p>
-                <strong>우산이 펼쳐지지 않았다.</strong>
+                <strong>창문이 열렸다.</strong>
               </p>
-
               <p>
-                 주어진 문장이 두 번째 상황을 자연스럽게 설명하고 있나요?
+                주어진 문장이 두 번째 상황을 자연스럽게 설명하고 있나요?
               </p>
+              <div style="margin-top:20px;">
+                <button class="jspsych-btn" disabled>예</button>
+                <button class="jspsych-btn" disabled>아니오</button>
+              </div>
             </div>
             <p>
-              두 그림을 잘 살펴본 뒤, 아래에 제시되는 문장을 읽고 주어진 질문에 대해 <strong>예</strong> 혹은 <strong>아니오</strong>를 선택해 답해 주시면 됩니다. 
+              두 그림을 잘 살펴본 뒤, 아래에 제시되는 문장을 읽고 본인의 판단에 따라 <strong>“예”</strong> 또는 <strong>“아니오”</strong>를 선택해 주세요.
             </p>
             <p>
-              위 예시의 경우, 문장이 상황을 올바르게 설명하고 있으므로 <strong>"예"</strong>를 선택하시면 됩니다.
-            </p>
+              다음으로 실제 실험과 동일한 형식의 문항 두 개를 더 보여드리겠습니다.<br>
+              화면 구성과 응답 방식을 보여드리기 위한 예시이며, 응답 내용은 기록되지 않으니 편하게 선택해 주세요.
+          </p>
           </div>
         </div>
         `
@@ -752,11 +799,67 @@
       button_label_next: "다음"
     });
 
+    // Practice Trials
+    const practice_items = [
+      {
+        context_image: "ex/cup_fill.png",
+        critical_image: "ex/wine_fill.png",
+        sentence: "와인잔을 비웠다."
+      },
+      {
+        context_image: "ex/mug_break.png",
+        critical_image: "ex/dish_break.png",
+        sentence: "접시가 깨졌다."
+      }
+    ];
+    function makePracticeJudgmentTrial(item) {
+      return {
+        type: jsPsychHtmlButtonResponse,
+        record_data: false,
+        stimulus: `
+          <div class="trial-card">
+            <div class="context-block">
+              <p class="picture-description">
+                먼저 다음과 같은 상황이 있었습니다.
+              </p>
+              <img class="practice-image" src="${item.context_image}">
+            </div>
+            <div class="critical-block">
+              <p class="picture-description">
+                이어서 다음과 같은 상황이 있었습니다.
+              </p>
+              <img class="practice-image" src="${item.critical_image}">
+            </div>
+            <div class="target-box">
+              <p class="target-sentence">
+                ${item.sentence}
+              </p>
+            </div>
+            <p class="trial-question">
+              주어진 문장이 두 번째 상황을 자연스럽게 설명하고 있나요?
+            </p>
+
+          </div>
+        `,
+
+        choices: response_buttons,
+      };
+    }
+
+    practice_items.forEach(
+      item => {timeline.push(makePracticeJudgmentTrial(item));
+      }
+    );
+
+
     // Begin Screen
     timeline.push({
       type: jsPsychHtmlButtonResponse,
       record_data: false,
       stimulus: `
+        <h2>
+          이제 실험을 시작하겠습니다.
+        </h2>
         <div class="begin-box">
           <p>이 실험은 정답을 맞히는 시험이 아닙니다. 본인의 자연스러운 판단에 따라 답해 주세요.</p>
           <p>별도의 시간 제한은 없지만 너무 오래 고민하지 마시고, 처음 읽었을 때의 느낌에 따라 선택해 주세요.</p>

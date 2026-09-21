@@ -92,6 +92,16 @@
       border-radius: 12px;
       text-align: center;
     }
+
+    .example-screen {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 30px;
+      background-color: white;
+      border: 1px solid #dbe3ea;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
   
     .jspsych-instructions-nav {
       margin-top: 30px;
@@ -102,8 +112,8 @@
       background-color: lemonchiffon;
       border-radius: 12px;
       padding: 18px;
-    }
-  
+      margin-bottom: 20px;
+    }  
   
     /* Start screen */
   
@@ -135,15 +145,7 @@
       border-radius: 10px;
       margin-bottom: 15px;
     }
-  
-    .target-sentence,
-    .probe-sentence {
-      font-size: 22px;
-      font-weight: 500;
-      margin: 0;
-      line-height: 1.6;
-    }
-  
+ 
     .meaning-arrow {
       font-size: 28px;
       margin: 15px 0;
@@ -487,86 +489,6 @@
 
     timeline.push(eligibility_loop);
 
-    // //Eligibity
-    // const eligibility_check = {
-    //   type: jsPsychSurveyHtmlForm,
-    //   preamble: `
-    //     <div style="max-width:700px; margin:auto; text-align:center;">
-    //       <h3>
-    //         연구 참여에 동의해주셔서 감사합니다.
-    //       </h3>
-    //       <h3>
-    //         본 연구의 대상은 만 18세 이상의 한국어 화자입니다.
-    //       </h3>
-    //     </div>
-    //   `,
-    //   html: `
-    //     <div style="max-width:700px; margin:auto;">
-    //       <div style="margin:30px 0;">
-    //         <p style="text-align:center;">
-    //           <strong>1. 만 18세 이상이신가요?</strong>
-    //         </p>
-
-    //         <div style="text-align:center;">
-    //           <label style="margin-right:25px;">
-    //             <input type="radio" name="age_18"  value="yes" required>
-    //             예
-    //           </label>
-
-    //           <label>
-    //             <input type="radio" name="age_18" value="no">
-    //             아니오
-    //           </label>
-    //         </div>
-    //       </div>
-
-    //       <div style="margin:30px 0;">
-    //         <p style="text-align:center;">
-    //           <strong>2. 어린 시절부터 한국어를 자연스럽게 습득하셨나요?</strong>
-    //         </p>
-
-    //         <div style="text-align:center;">
-    //           <label style="margin-right:25px;">
-    //             <input type="radio" name="native_korean" value="yes" required>
-    //             예
-    //           </label>
-
-    //           <label>
-    //             <input type="radio" name="native_korean" value="no">
-    //             아니오
-    //           </label>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   `,
-    //   button_label: "계속",
-    //   data: {phase: "eligibility"},
-
-    //   on_finish: function(data) {
-    //     if (
-    //       data.response.age_18 !== "yes" ||
-    //       data.response.native_korean !== "yes"
-    //     ) {
-    //       jsPsych.abortExperiment(`
-    //         <div class="completion-box">
-    //           <p>
-    //             죄송하지만 본 연구의 참여 조건에 해당하지 않습니다.
-    //           </p>
-    //            <p>
-    //             응답을 잘못 선택하셨다면
-    //             <strong>“다시 확인하기”</strong>를 눌러 주세요.
-    //           </p>
-    //           <p>
-    //             관심을 가져주셔서 감사합니다.
-    //           </p>
-    //         </div>
-    //       `,
-    //     );
-    //     }
-    //   }
-    // };
-    // timeline.push(eligibility_check);
-
     // Demographic information
     const demographics = {
       type: jsPsychSurveyHtmlForm,
@@ -630,13 +552,39 @@
             <p>문장들을 읽은 후, 두 번째 문장이 첫 번째 문장과 <strong>같은 의미를 자연스럽게 다시 표현한 것인지</strong> 판단해 주세요.</p>
             <p>자연스럽게 다시 표현한 것이라고 생각하면 <strong>“예”</strong>, 그렇지 않다고 생각하면 <strong>“아니오”</strong>를 선택해 주세요.</p>
           </div>
-        <h3>예를 들어:</h3>
-        <div class="inst-box">
-          <p>
-            민수가 지수를 도와주었다. 다시 말해, 지수는 민수에게 도움을 받았다.
-          </p>
+            <p>본 실험은 컴퓨터 환경에 맞게 구성되어 있습니다.<br>
+            원활한 실험 진행을 위해 가능하면 컴퓨터를 이용해 참여해 주세요.</p>
         </div>
-          <p>이 경우, 두 번째 문장은 첫 번째 문장과 같은 의미를 자연스럽게 다시 표현한 것이므로 <strong>“예”</strong>를 선택합니다.</p>
+      `,
+      `
+      <div class="content">
+        <h3>예를 들어, 다음과 같은 화면을 보게 됩니다:</h3>
+        <div class="example-screen">
+          <div class="trial-card">
+            <div class="sentence-box">
+              <p>
+                민수가 지수를 도와주었다.
+              </p>
+              <p>
+                다시 말해, 지수는 민수에게 도움을 받았다.
+              </p>
+            </div>
+            <p class="trial-question">
+              두 번째 문장이 첫 번째 문장과 같은 의미를 자연스럽게 다시 표현하고 있나요?
+            </p>
+            <div style="margin-top:20px;">
+              <button class="jspsych-btn" disabled>예</button>
+              <button class="jspsych-btn" disabled>아니오</button>
+            </div>
+          </div>
+        </div>
+          <p>
+            이와 같은 방식으로 두 문장의 의미를 비교한 뒤, 본인의 판단에 따라 <strong>“예”</strong> 또는 <strong>“아니오”</strong>를 선택해 주세요.
+          </p>
+          <p>
+            다음으로 실제 실험과 동일한 형식의 문항 두 개를 더 보여드리겠습니다.<br>
+            화면 구성과 응답 방식을 보여드리기 위한 예시이며, 응답 내용은 기록되지 않으니 편하게 선택해 주세요.
+          </p>
         `
       ],
       show_clickable_nav: true,
@@ -647,10 +595,50 @@
 
     timeline.push(instructions);
 
+    //Practice trials
+    function makePracticeTrial(sentence, probe) {
+      return {type: jsPsychHtmlButtonResponse,
+        record_data: false,
+        stimulus: `
+          <div class="trial-card">
+            <div class="sentence-box">
+              <p>
+                ${sentence}
+              </p>
+              <p>
+                다시 말해, ${probe}
+              </p>
+            </div>
+            <p class="trial-question">
+              두 번째 문장이 첫 번째 문장과 같은 의미를 자연스럽게 다시 표현하고 있나요?
+            </p>
+          </div>
+        `,
+        choices: response_buttons
+      };
+    }
+    // Practice 1: natural paraphrase
+    timeline.push(
+      makePracticeTrial(
+        "민수가 지수에게 우산을 빌려주었다.",
+        "지수는 민수에게 우산을 빌렸다."
+      )
+    );
+    // Practice 2: not a paraphrase
+    timeline.push(
+      makePracticeTrial(
+        "수진이가 문을 열었다.",
+        "수진이가 문을 닫았다."
+      )
+    );
+
     timeline.push({
     type: jsPsychHtmlButtonResponse,
     record_data: false,
     stimulus: `
+      <h2>
+        이제 실험을 시작하겠습니다.
+      </h2>
       <div class="begin-box">
         <p>이 실험은 정답을 맞히는 시험이 아닙니다. 본인의 자연스러운 판단에 따라 답해 주세요.</p>
         <p>별도의 시간 제한은 없지만 너무 오래 고민하지 마시고, 처음 읽었을 때의 느낌에 따라 선택해주세요.</p>
@@ -672,7 +660,7 @@
       <div class="trial-card">
 
         <div class="sentence-box">
-          <p class="target-sentence">${item.sentence}</p> <p class="probe-sentence">다시 말해, ${item.probe}</p>
+          <p>${item.sentence}</p> <p>다시 말해, ${item.probe}</p>
         </div>
 
         <p class="trial-question">
