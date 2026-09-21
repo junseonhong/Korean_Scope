@@ -114,6 +114,13 @@
       padding: 18px;
       margin-bottom: 20px;
     }  
+
+    .jspsych-content .sentence-label {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0 0 8px 0;
+      line-height: 1.4;
+    }
   
     /* Start screen */
   
@@ -562,15 +569,24 @@
         <div class="example-screen">
           <div class="trial-card">
             <div class="sentence-box">
+              <div class="sentence-label">
+                문장 1
+              </div>
               <p>
                 민수가 지수를 도와주었다.
               </p>
+              </div>
+            <div class="sentence-box">
+              <div class="sentence-label">
+                문장 2
+              </div>
               <p>
-                다시 말해, 지수는 민수에게 도움을 받았다.
+                지수는 민수에게 도움을 받았다.
               </p>
+              </div>
             </div>
             <p class="trial-question">
-              두 번째 문장이 첫 번째 문장과 같은 의미를 자연스럽게 다시 표현하고 있나요?
+              문장 1을 문장 2와 같이 바꾸어 말할 수 있나요?
             </p>
             <div style="margin-top:20px;">
               <button class="jspsych-btn" disabled>예</button>
@@ -602,15 +618,25 @@
         stimulus: `
           <div class="trial-card">
             <div class="sentence-box">
+              <div class="sentence-label">
+                문장 1
+              </div>
               <p>
                 ${sentence}
               </p>
+              </div>
+            </div>
+            <div class="sentence-box">
+              <div class="sentence-label">
+                문장 2
+              </div>
               <p>
-                다시 말해, ${probe}
+                ${probe}
               </p>
+              </div>
             </div>
             <p class="trial-question">
-              두 번째 문장이 첫 번째 문장과 같은 의미를 자연스럽게 다시 표현하고 있나요?
+              문장 1을 문장 2와 같이 바꾸어 말할 수 있나요?
             </p>
           </div>
         `,
@@ -658,18 +684,24 @@
       },
       stimulus: `
       <div class="trial-card">
-
         <div class="sentence-box">
-          <p>${item.sentence}</p> <p>다시 말해, ${item.probe}</p>
+          <div class="sentence-label">
+            문장 1
+          </div>
+            <p>${item.sentence}</p>
+          </div>
+        <div class="sentence-box">
+          <div class="sentence-label">
+            문장 2
+          </div> 
+            <p>${item.probe}</p>
+          </div>
         </div>
-
         <p class="trial-question">
-          두 번째 문장이 첫 번째 문장과 같은 의미를 자연스럽게 다시 표현하고 있나요?
+          문장 1을 문장 2와 같이 바꾸어 말할 수 있나요?
         </p>
-
       </div>
     `,
-
     choices: response_buttons,
     data: {
       subject_id: subject_id,

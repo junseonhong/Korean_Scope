@@ -135,7 +135,26 @@
       margin: 0 auto;
     }
 
-  /* Start screen */
+    .sentence-label {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+    }
+
+    body:has(
+      #interactive-example-page:not(.example-completed)
+    )
+    .jspsych-instructions-nav {
+      display: none;
+    }
+
+    .jspsych-content.practice-stage {
+      width: 100%;
+      max-width: 1000px;
+      margin: auto !important;
+    }
+
+    /* Start screen */
     .begin-box {
       background-color: #e0f2fe;
       padding: 30px;
@@ -421,9 +440,6 @@
             item.context_image,
             item.critical_image
           ]),
-        // Instruction images
-        "ex/umbrella_change.png",
-        "ex/umbrella_no_change.png"
       ])
     ];
 
@@ -703,6 +719,17 @@
 
 
     // Instructions
+    function showInstructionExampleStep2() {
+      // Reveal second situation + sentence
+      document.getElementById("instruction-example-step2").style.display = "block";
+      // Remove the inner "다음" button
+      document.getElementById("instruction-example-next").style.display = "none";
+      // Reveal explanation below example
+      document.getElementById("instruction-example-after").style.display = "block";
+      // Reveal jsPsych 이전 / 다음 navigation
+      const nav =document.querySelector(".jspsych-instructions-nav");
+      if (nav) {nav.style.display = "block";}
+    }
     timeline.push({
       type: jsPsychInstructions,
       record_data: false,
@@ -714,7 +741,10 @@
           </h2>
           <div class="inst-box">
           <p>
-            이 실험은 그림을 본 후 주어진 문장에 대한 질문에 답하는 실험입니다.
+            이 실험은 두 개의 그림을 본 후 주어진 문장에 대한 질문에 답하는 실험입니다.
+          </p>
+          <p>
+            다음 화면에서 그림이 무엇을 나타내는지 설명드리겠습니다.
           </p>
           </div>
            <p>본 실험은 컴퓨터 환경에 맞게 구성되어 있습니다.<br>
@@ -733,67 +763,81 @@
             예를 들어:
           </h3>
           <p>
-            그림 1은 처음에는 접혀 있던 우산이 이후에는 펼쳐진 상황을 나타내는 그림입니다.
+            그림 1은 사람이 처음에는 접혀 있던 우산을 펼치는 상황을 나타내는 그림입니다.
           </p>
           <div class="example-screen">
-            <img src="ex/umbrella_change.png" class="instruction-example-image">
+            <img src="ex/practice_umbrella_change.png" class="instruction-example-image">
             <p>
-              그림 1
+              <strong>그림 1</strong>
             </p>
           </div>
           <p>
-            그림 2는 처음과 이후의 상태가 동일하여, 아무런 변화 없이 우산이 그대로 접혀 있는 상황을 나타내는 그림입니다.
+            그림 2는 처음과 이후의 상태가 같아,우산이 그대로 접혀 있는 상황을 나타내는 그림입니다.
           </p>
           <div class="example-screen">
-            <img src="ex/umbrella_no_change.png" class="instruction-example-image">
+            <img src="ex/practice_umbrella_no_change.png" class="instruction-example-image">
             <p>
-              그림 2
+              <strong>그림 2</strong>
             </p>
           </div>
         </div>
         `,
         `
-        <div class="instruction-box">
-          <div class="instruction-highlight">
-            <p>
-              그림은 두 개가 하나의 쌍으로 제시됩니다.
-              첫 번째 그림은 앞서 일어난 상황을, 두 번째 그림은 그다음에 일어난 상황을 보여줍니다.
-            </p>
-            <h3>
-              예를 들어, 다음과 같은 화면을 보게 됩니다:
-            </h3>
-            <div class="example-screen">
-              <p>
-                먼저 다음과 같은 상황이 있었습니다.
-              </p>
-              <img src="ex/door_opening.png" class="instruction-example-image">
-              <p>
-                이어서 다음과 같은 상황이 있었습니다.
-              </p>
-              <img src="ex/window_opening.png" class="instruction-example-image">
-              <p>
-                <strong>창문이 열렸다.</strong>
-              </p>
-              <p>
-                주어진 문장이 두 번째 상황을 자연스럽게 설명하고 있나요?
-              </p>
-              <div style="margin-top:20px;">
-                <button class="jspsych-btn" disabled>예</button>
-                <button class="jspsych-btn" disabled>아니오</button>
-              </div>
-            </div>
-            <p>
-              두 그림을 잘 살펴본 뒤, 아래에 제시되는 문장을 읽고 본인의 판단에 따라 <strong>“예”</strong> 또는 <strong>“아니오”</strong>를 선택해 주세요.
-            </p>
-            <p>
-              다음으로 실제 실험과 동일한 형식의 문항 두 개를 더 보여드리겠습니다.<br>
-              화면 구성과 응답 방식을 보여드리기 위한 예시이며, 응답 내용은 기록되지 않으니 편하게 선택해 주세요.
+       <div id="interactive-example-page">
+        <p>
+          실험에서는 이러한 상황 그림 두 개가 차례로 제시됩니다.<br>
+          먼저 첫 번째 상황 그림이 제시되고, <strong>"다음"</strong>을 클릭하시면 그 다음에 일어난 상황을 보여주는 두 번째 그림과 문장이 제시됩니다.
+        </p>
+        <h3>
+          예를 들어, 다음과 같은 화면을 보게 됩니다:
+        </h3>
+        <div class="example-screen">
+          <p>
+            먼저 다음과 같은 상황이 있었습니다.
           </p>
+          <img src="ex/practice_door_opening.png" class="instruction-example-image">
+          <div id="instruction-example-next" style="margin-top:20px;">
+            <button type="button" class="jspsych-btn" onclick="showInstructionExampleStep2()">
+              다음
+            </button>
+          </div>
+          <div id="instruction-example-step2" style="display:none;">
+            <p style="margin-top:30px;">
+              이어서 다음과 같은 상황이 있었습니다.
+            </p>
+            <img src="ex/practice_window_opening.png" class="instruction-example-image">
+            <p>
+              <strong>경찰이 창문을 열었다.</strong>
+            </p>
+            <p>
+              주어진 문장이 두 번째 상황을 자연스럽게 설명하고 있나요?
+            </p>
+            <div style="margin-top:20px;"> 
+              <button class="jspsych-btn" disabled>
+                예
+              </button>
+              <button class="jspsych-btn" disabled>
+                아니오
+              </button>
+            </div>
           </div>
         </div>
-        `
+        <div id="instruction-example-after" style="display:none;" >
+          <p>
+            두 그림을 잘 살펴본 뒤, 주어진 문장이 두 번째 상황을 자연스럽게 설명하는지 판단하여 <strong>“예”</strong> 또는 <strong>“아니오”</strong>를 선택해 주세요.
+          </p>
+          </div>
+      </div>
+      `,
+      `
+      <div class="inst-box">
+        <p>
+          다음으로 실제 실험과 유사한 형식의 문항 두 개를 더 보여드리겠습니다.<br>
+          화면 구성과 응답 방식을 보여드리기 위한 예시이며, 응답 내용은 기록되지 않으니 편하게 선택해 주세요.
+        </p>
+      </div>
+      `
       ],
-
       show_clickable_nav: true,
       button_label_previous: "이전",
       button_label_next: "다음"
@@ -802,16 +846,54 @@
     // Practice Trials
     const practice_items = [
       {
-        context_image: "ex/cup_fill.png",
-        critical_image: "ex/wine_fill.png",
-        sentence: "와인잔을 비웠다."
+        context_image: "ex/practice_cup_fill.png",
+        critical_image: "ex/practice_wine_fill.png",
+        sentence: "웨이터가 와인잔을 비웠다."
       },
       {
-        context_image: "ex/mug_break.png",
-        critical_image: "ex/dish_break.png",
-        sentence: "접시가 깨졌다."
+        context_image: "ex/practice_mug_break.png",
+        critical_image: "ex/practice_dish_break.png",
+        sentence: "요리사가 접시를 깼다."
       }
     ];
+
+    // Practice Stage 1: first situation only
+    function makePracticeContextTrial(item) {
+      return {
+        type: jsPsychHtmlButtonResponse,
+        record_data: false,
+        stimulus: `
+          <div class="trial-card">
+            <div class="context-block">
+              <p class="picture-description">
+                먼저 다음과 같은 상황이 있었습니다.
+              </p>
+              <img class="practice-image" src="${item.context_image}">
+            </div>
+            <!-- Invisible placeholder so the layout matches Stage 2-->
+            <div class="stage1-placeholder">
+              <div class="critical-block">
+                <p class="picture-description">
+                  이어서 다음과 같은 상황이 있었습니다.
+                </p>
+                <img class="practice-image" src="${item.critical_image}">
+              </div>
+              <div class="target-box">
+                <p class="target-sentence"> 
+                  ${item.sentence}
+                </p>
+              </div>
+              <p class="trial-question">
+                주어진 문장이 두 번째 상황을 자연스럽게 설명하고 있나요?
+              </p>
+            </div>
+          </div>
+        `,
+        choices: ["다음"],
+        css_classes: ["practice-stage", "context-stage"]
+      };
+    }
+    // Practice Stage 2:
     function makePracticeJudgmentTrial(item) {
       return {
         type: jsPsychHtmlButtonResponse,
@@ -838,19 +920,19 @@
             <p class="trial-question">
               주어진 문장이 두 번째 상황을 자연스럽게 설명하고 있나요?
             </p>
-
           </div>
         `,
-
         choices: response_buttons,
+        css_classes: ["practice-stage", "judgment-stage"]
       };
     }
-
-    practice_items.forEach(
-      item => {timeline.push(makePracticeJudgmentTrial(item));
-      }
-    );
-
+    // Add practice trials in Stage 1 → Stage 2 order
+    practice_items.forEach(item => {
+      // First situation
+      timeline.push(makePracticeContextTrial(item));
+      // Then second situation + judgment
+      timeline.push( makePracticeJudgmentTrial(item));
+    });
 
     // Begin Screen
     timeline.push({
