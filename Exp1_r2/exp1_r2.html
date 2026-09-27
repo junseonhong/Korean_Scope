@@ -517,7 +517,6 @@
             </p>
             <input type="number" name="age" min="18" max="120" required style="width:80px;padding:8px;font-size:16px;text-align:center;">
           </div>
-
           <div style="margin:30px 0; text-align:center;">
             <p>
               <strong>2. 성별을 선택해 주세요.</strong>
@@ -526,17 +525,14 @@
               <input type="radio" name="gender" value="male" required>
               남성
             </label>
-
             <label style="margin-right:20px;">
               <input type="radio" name="gender" value="female">
               여성
             </label>
-
             <label style="margin-right:20px;">
               <input type="radio" name="gender" value="other">
               기타
             </label>
-
             <label>
               <input type="radio" name="gender"value="prefer_not_to_say">
               밝히고 싶지 않음
@@ -558,9 +554,9 @@
         <div class="content">
           <h2>실험에 참여해주셔서 감사합니다!</h2><br>
           <div class="inst-box">
-            <p>이 실험에서는 먼저 하나의 문장을 읽게 됩니다.</p>
-            <p>문장을 읽은 뒤 <strong>“다음”</strong>을 누르면 특정한 상황이 제시됩니다.</p>
-            <p>제시된 상황에서 앞서 읽은 문장을 사용할 수 있다고 생각하면 <strong>“예”</strong>, 사용할 수 없다고 생각하면 <strong>“아니오”</strong>를 선택해 주세요.</p>
+            <p>이 실험의 과제는 두 단계로 이루어져 있습니다.</p>
+            <p>먼저 문장 하나가 제시되고, <strong>“다음”</strong>을 클릭하면 관련된 질문이 나옵니다.</p>
+            <p>질문을 읽고 <strong>“예”</strong> 또는 <strong>“아니오”</strong>를 선택해 주세요.</p>
           </div>
           <p>본 실험은 컴퓨터 환경에 맞게 구성되어 있습니다.<br>
           원활한 실험 진행을 위해 가능하면 컴퓨터를 이용해 참여해 주세요.</p>
@@ -637,7 +633,7 @@
               </p>
             </div>
             <p class="trial-question trial-question-placeholder">
-               이러한 경우, <strong>${situation}</strong> 수도 있나요?
+               이 경우, <strong>${situation}</strong> 수도 있나요?
             </p>
           </div>
         `,
@@ -654,7 +650,7 @@
               </p>
             </div>
             <p class="trial-question">
-               이러한 경우, <strong>${situation}</strong> 수도 있나요?
+               이 경우, <strong>${situation}</strong> 수도 있나요?
             </p>
           </div>
         `,
@@ -1064,16 +1060,20 @@
           <p> 
             <strong>예금주명</strong>
           </p>
-          <input type="text" name="account_holder" required style="width:200px;padding:10px;font-size:18px;text-align:center;">
+          <input type="text" name="account_holder" placeholder="홍길동" required style="width:200px;padding:10px;font-size:18px;text-align:center;">
           <p>
             <strong>은행</strong>
           </p>
           <input type="text" name="bank_name"
-            placeholder="예: 우리" required style="width:200px;padding:10px;font-size:18px;text-align:center;">
+            placeholder="우리" required style="width:200px;padding:10px;font-size:18px;text-align:center;">
           <p>
             <strong>계좌번호</strong>
           </p>
-          <input type="text" name="account_number" placeholder="예: 1002-012-567890" required style="width:220px;padding:10px;font-size:18px;text-align:center;">
+          <input type="text" name="account_number" placeholder="1002-012-567890" required style="width:220px;padding:10px;font-size:18px;text-align:center;">
+          <p>
+            <strong>연락처</strong>
+          </p>
+          <input type="text" name="account_number" placeholder="010-1234-5678" required style="width:220px;padding:10px;font-size:18px;text-align:center;">
           <p style="font-size:15px; color:#64748b;">
             입력하신 정보는 사례비 지급 외의 용도로
             사용되지 않으며, 지급이 완료된 후 즉시 폐기됩니다.
