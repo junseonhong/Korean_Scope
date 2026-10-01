@@ -302,6 +302,97 @@
       border-radius: 8px;
       box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.45);
     }
+
+    /* Mobile */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    .target-sentence,
+    .trial-question,
+    .picture-description {
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    @media (max-width: 768px) {
+      .jspsych-content-wrapper {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 16px 12px;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .jspsych-content,
+      .trial-card,
+      .context-block,
+      .critical-block,
+      .example-screen {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      :root {
+        --stimulus-width: 100%;
+      }
+
+      .experiment-image,
+      .practice-image,
+      .instruction-example-image {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      .target-sentence {
+        font-size: 19px;
+      }
+
+      .trial-question {
+        font-size: 17px;
+      }
+
+      .picture-description {
+        font-size: 16px;
+      }
+
+      .jspsych-btn {
+        min-width: 92px;
+        min-height: 44px;
+        padding: 12px 18px;
+        font-size: 16px;
+      }
+
+      .jspsych-content .consent p {
+        font-size: 15px;
+        text-align: left;
+      }
+
+      input,
+      select,
+      textarea {
+        max-width: 100%;
+      }
+    }
   </style>
 
 </head>
@@ -747,8 +838,8 @@
             다음 화면에서 그림이 무엇을 나타내는지 설명드리겠습니다.
           </p>
           </div>
-           <p>본 실험은 컴퓨터 환경에 맞게 구성되어 있습니다.<br>
-            원활한 실험 진행을 위해 가능하면 컴퓨터를 이용해 참여해 주세요.</p>
+          <p>본 실험은 컴퓨터 환경에 최적화되어 있습니다.<br>
+          원활한 실험 진행을 위해 컴퓨터 이용을 권장하지만, 모바일 환경에서도 참여하실 수 있습니다.</p>
         </div>
         `,
         `
@@ -1100,16 +1191,20 @@
           <p> 
             <strong>예금주명</strong>
           </p>
-          <input type="text" name="account_holder" required style="width:200px;padding:10px;font-size:18px;text-align:center;">
+          <input type="text" name="account_holder" placeholder="홍길동" required style="width:200px;padding:10px;font-size:18px;text-align:center;">
           <p>
             <strong>은행</strong>
           </p>
           <input type="text" name="bank_name"
-            placeholder="예: 우리" required style="width:200px;padding:10px;font-size:18px;text-align:center;">
+            placeholder="우리" required style="width:200px;padding:10px;font-size:18px;text-align:center;">
           <p>
             <strong>계좌번호</strong>
           </p>
-          <input type="text" name="account_number" placeholder="예: 1002-012-567890" required style="width:220px;padding:10px;font-size:18px;text-align:center;">
+          <input type="text" name="account_number" placeholder="1002-012-567890" required style="width:220px;padding:10px;font-size:18px;text-align:center;">
+          <p>
+            <strong>연락처</strong>
+          </p>
+          <input type="text" name="contact" placeholder="010-1234-5678" required style="width:220px;padding:10px;font-size:18px;text-align:center;">
           <p style="font-size:15px; color:#64748b;">
             입력하신 정보는 사례비 지급 외의 용도로
             사용되지 않으며, 지급이 완료된 후 즉시 폐기됩니다.
